@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class MessageTest < ActiveSupport::TestCase
   test 'title should be present' do
@@ -14,7 +16,7 @@ class MessageTest < ActiveSupport::TestCase
 
     assert_not message.save, 'Saved message without a body'
   end
-  
+
   test 'should not be valid without a user' do
     message = Message.new(title: 'Message title', body: 'Message body')
 

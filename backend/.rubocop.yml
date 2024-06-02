@@ -1,9 +1,9 @@
-git require:
+require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-thread_safety
-  - rubocop-rspec
-  - rubocop-factory_bot
+  # - rubocop-rspec
+  # - rubocop-factory_bot
 
 AllCops:
   TargetRubyVersion: 3.2.2
@@ -11,6 +11,7 @@ AllCops:
   Exclude:
     - '**/node_modules/**/*'
     - 'local_gems/**/*'
+    - 'bin/*'
     - '.bundle/**/*'
     - '.yardoc/**/*'
     - 'codeclimate/**/*'
@@ -22,6 +23,7 @@ AllCops:
     - 'db/dummy/*'
     - 'db/schema.rb'
     - 'db/seeds.rb'
+    - 'db/migrate/*'
     - 'doc/**/*'
     - 'files/**/*'
     - 'log/**/*'
@@ -78,6 +80,12 @@ Metrics/AbcSize: # bkrapf: http://wiki.c2.com/?AbcMetric
 Naming/RescuedExceptionsVariableName:
   Enabled: true
   PreferredName: exception
+
+# Naming/VariableName:
+#   Enabled: true
+#   EnforcedStyle: snake_case
+#   Exclude:
+
 
 Metrics/BlockLength: # bkrapf: deactivated because there is already a limitation of the line and method length.
   Enabled: true
@@ -325,48 +333,48 @@ Style/StringConcatenation:
   Enabled: true
   Exclude:
 
-Rails/ActiveRecordCallbacksOrder:
-  Enabled: true
-  Include: ['app/models/**/*.rb']
+# Rails/ActiveRecordCallbacksOrder:
+#   Enabled: true
+#   Include: ['app/models/**/*.rb']
 
-Rails/EnvironmentVariableAccess:
-  Enabled: true
-  AllowReads: true
-  AllowWrites: false
-  Exclude:
+# Rails/EnvironmentVariableAccess:
+#   Enabled: true
+#   AllowReads: true
+#   AllowWrites: false
+#   Exclude:
 
-Rails/FindById:
-  Enabled: true
+# Rails/FindById:
+#   Enabled: true
 
-Rails/Inquiry:
-  Enabled: true
+# Rails/Inquiry:
+#   Enabled: true
 
-Rails/MailerName:
-  Enabled: true
+# Rails/MailerName:
+#   Enabled: true
 
-Rails/MatchRoute:
-  Enabled: true
+# Rails/MatchRoute:
+#   Enabled: true
 
-Rails/NegateInclude:
-  Enabled: true
+# Rails/NegateInclude:
+#   Enabled: true
 
-Rails/Pluck:
-  Enabled: true
+# Rails/Pluck:
+#   Enabled: true
 
-Rails/PluckInWhere:
-  Enabled: true
+# Rails/PluckInWhere:
+#   Enabled: true
 
-Rails/RenderInline:
-  Enabled: true
+# Rails/RenderInline:
+#   Enabled: true
 
-Rails/RenderPlainText:
-  Enabled: true
+# Rails/RenderPlainText:
+#   Enabled: true
 
-Rails/ShortI18n:
-  Enabled: true
+# Rails/ShortI18n:
+#   Enabled: true
 
-Rails/WhereExists:
-  Enabled: true
+# Rails/WhereExists:
+#   Enabled: true
 
 Layout/BeginEndAlignment:
   Enabled: true
@@ -664,307 +672,302 @@ Layout/TrailingWhitespace:
   Enabled: true
   Exclude:
 
-Performance/RedundantEqualityComparisonBlock:
-  Enabled: true
-
-Performance/MapCompact:
-  Enabled: true
-
-Performance/MethodObjectAsBlock:
-  Enabled: true # (bkrapf) enable it!
-
-# Cop supports --auto-correct.
-Performance/Count:
-  Enabled: true
-  Exclude:
-
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect.
-Performance/TimesMap:
-  Enabled: true
-  Exclude:
-
-Performance/UnfreezeString:
-  Enabled: true
-  Exclude:
-
-Performance/RedundantMerge:
-  Enabled: true
-  Exclude:
-
-Performance/AncestorsInclude:
-  Enabled: true
-
-Performance/BigDecimalWithNumericArgument:
-  Enabled: true
-
-Performance/RedundantSortBlock:
-  Enabled: true
-
-Performance/RedundantStringChars:
-  Enabled: true
-
-Performance/ReverseFirst:
-  Enabled: true
-
-Performance/SortReverse:
-  Enabled: true
-
-Performance/Squeeze:
-  Enabled: true
-
-Performance/StringInclude:
-  Enabled: true
-
-Performance/Sum:
-  Enabled: true
-  Exclude:
-
-Performance/CollectionLiteralInLoop:
-  Enabled: true
-  Exclude:
-
-Rails/DynamicFindBy:
-  Exclude:
-
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/ActiveRecordOverride:
-  Exclude:
+# Performance/RedundantEqualityComparisonBlock:
+#   Enabled: true
+
+# Performance/MapCompact:
+#   Enabled: true
+
+# Performance/MethodObjectAsBlock:
+#   Enabled: true # (bkrapf) enable it!
+
+# # Cop supports --auto-correct.
+# Performance/Count:
+#   Enabled: true
+#   Exclude:
+
+# # Cop supports --auto-correct.
+# # Configuration parameters: AutoCorrect.
+# Performance/TimesMap:
+#   Enabled: true
+#   Exclude:
+
+# Performance/UnfreezeString:
+#   Enabled: true
+#   Exclude:
+
+# Performance/RedundantMerge:
+#   Enabled: true
+#   Exclude:
+
+# Performance/AncestorsInclude:
+#   Enabled: true
+
+# Performance/BigDecimalWithNumericArgument:
+#   Enabled: true
+
+# Performance/RedundantSortBlock:
+#   Enabled: true
+
+# Performance/RedundantStringChars:
+#   Enabled: true
+
+# Performance/ReverseFirst:
+#   Enabled: true
+
+# Performance/SortReverse:
+#   Enabled: true
+
+# Performance/Squeeze:
+#   Enabled: true
+
+# Performance/StringInclude:
+#   Enabled: true
+
+# Performance/Sum:
+#   Enabled: true
+#   Exclude:
+
+# Performance/CollectionLiteralInLoop:
+#   Enabled: true
+#   Exclude:
+
+# Rails/DynamicFindBy:
+#   Exclude:
+
+# # Configuration parameters: Include.
+# # Include: app/models/**/*.rb
+# Rails/ActiveRecordOverride:
+#   Exclude:
 
-# Configuration parameters: Include.
-# Include: db/migrate/*.rb
-Rails/CreateTableWithTimestamps:
-  Exclude:
+# # Configuration parameters: Include.
+# # Include: db/migrate/*.rb
+# Rails/CreateTableWithTimestamps:
+#   Exclude:
 
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, lib/**/*.rb
-Rails/Exit:
-  Exclude:
-    - 'lib/**/*.rake'
+# # Configuration parameters: Include.
+# # Include: app/**/*.rb, config/**/*.rb, lib/**/*.rb
+# Rails/Exit:
+#   Exclude:
+#     - 'lib/**/*.rake'
 
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Enabled: true
-  EnforcedStyle: 'arguments'
+# # Configuration parameters: EnforcedStyle.
+# # SupportedStyles: slashes, arguments
+# Rails/FilePath:
+#   Enabled: true
+#   EnforcedStyle: 'arguments'
 
-# Configuration parameters: Include.
-# Include: app/controllers/**/*.rb
-Rails/LexicallyScopedActionFilter:
-  Enabled: false # disabled because of Lint/UselessMethodDefinition and rubocop-todo is not added automatically.
-  Include: ['app/controllers/**/*.rb', 'app/mailers/**/*.rb']
+# # Configuration parameters: Include.
+# # Include: app/controllers/**/*.rb
+# Rails/LexicallyScopedActionFilter:
+#   Enabled: false # disabled because of Lint/UselessMethodDefinition and rubocop-todo is not added automatically.
+#   Include: ['app/controllers/**/*.rb', 'app/mailers/**/*.rb']
 
-Rails/OutputSafety:
-  Enabled: true
-  Exclude:
+# Rails/OutputSafety:
+#   Enabled: true
+#   Exclude:
 
-# Configuration parameters: Include.
-# Include: db/migrate/*.rb
-Rails/ReversibleMigration:
-  Enabled: true
-  Exclude:
+# # Configuration parameters: Include.
+# # Include: db/migrate/*.rb
+# Rails/ReversibleMigration:
+#   Enabled: true
+#   Exclude:
 
-# Configuration parameters: Environments.
-# Environments: development, test, production
-Rails/UnknownEnv:
-  Enabled: true
-  Environments: [ 'development', 'test', 'production', 'staging' ]
-  Exclude:
+# # Configuration parameters: Environments.
+# # Environments: development, test, production
+# Rails/UnknownEnv:
+#   Enabled: true
+#   Environments: [ 'development', 'test', 'production', 'staging' ]
+#   Exclude:
 
-Rails/BulkChangeTable:
-  Enabled: false
-  Database: postgresql
-  Include: ['db/migrate/*.rb']
+# Rails/BulkChangeTable:
+#   Enabled: false
+#   Database: postgresql
+#   Include: ['db/migrate/*.rb']
 
-Rails/InverseOf: # bkrapf: https://www.viget.com/articles/exploring-the-inverse-of-option-on-rails-model-associations/
-  Enabled: true
-  Exclude:
+# Rails/InverseOf: # bkrapf: https://www.viget.com/articles/exploring-the-inverse-of-option-on-rails-model-associations/
+#   Enabled: true
+#   Exclude:
 
-Rails/Output:
-  Enabled: true
-  Exclude:
-    - 'config/deploy/*.rb' # bkrapf: exclude by default
-    - 'lib/tasks/**/*' # bkrapf: exclude by default
-    - 'db/**/**.rb' # bkrapf: exclude by default
+# Rails/Output:
+#   Enabled: true
+#   Exclude:
+#     - 'config/deploy/*.rb' # bkrapf: exclude by default
+#     - 'lib/tasks/**/*' # bkrapf: exclude by default
+#     - 'db/**/**.rb' # bkrapf: exclude by default
 
-Rails/ReflectionClassName:
-  Enabled: true
-  Exclude:
+# Rails/ReflectionClassName:
+#   Enabled: true
+#   Exclude:
 
-Rails/SkipsModelValidations:
-  Enabled: true
-  Exclude:
-    - 'spec/**/*.rb' # bkrapf: exclude by default
-    - 'db/migrate/**/*.rb' # bkrapf: exclude by default
+# Rails/SkipsModelValidations:
+#   Enabled: true
+#   Exclude:
+#     - 'spec/**/*.rb' # bkrapf: exclude by default
+#     - 'db/migrate/**/*.rb' # bkrapf: exclude by default
 
-Style/AsciiComments:
-  Enabled: false
+# Style/AsciiComments:
+#   Enabled: false
 
-Rails/RakeEnvironment: # bkrapf: there are also tasks that do not run in the rails environment.
-  Enabled: false
+# Rails/RakeEnvironment: # bkrapf: there are also tasks that do not run in the rails environment.
+#   Enabled: false
 
-Rails/AfterCommitOverride:
-  Enabled: true
+# Rails/AfterCommitOverride:
+#   Enabled: true
 
-Rails/SquishedSQLHeredocs:
-  Enabled: true
+# Rails/SquishedSQLHeredocs:
+#   Enabled: true
 
-Rails/WhereNot:
-  Enabled: true
+# Rails/WhereNot:
+#   Enabled: true
 
-RSpec/InstanceVariable: # (bkrapf) Cop is disabled because we configure the test environment in our before and after blocks.
-  Enabled: false
+# RSpec/InstanceVariable: # (bkrapf) Cop is disabled because we configure the test environment in our before and after blocks.
+#   Enabled: false
 
-RSpec/BeforeAfterAll: # (bkrapf) Cop is disabled because we configure the test environment in our before and after blocks.
-  Enabled: false
+# RSpec/BeforeAfterAll: # (bkrapf) Cop is disabled because we configure the test environment in our before and after blocks.
+#   Enabled: false
 
-RSpec/MessageSpies:
-  Exclude:
+# RSpec/MessageSpies:
+#   Exclude:
 
-RSpec/RepeatedExample:
-  Exclude:
+# RSpec/RepeatedExample:
+#   Exclude:
 
-RSpec/ContextWording:
-  Exclude:
+# RSpec/ContextWording:
+#   Exclude:
 
-RSpec/MessageChain:
-  Exclude:
+# RSpec/MessageChain:
+#   Exclude:
 
-RSpec/SubjectStub:
-  Exclude:
+# RSpec/SubjectStub:
+#   Exclude:
 
-RSpec/StubbedMock:
-  Enabled: false # (bkrapf) Could be activated. I think it is a good idea to use allow and except always the same way over all specs.
+# RSpec/StubbedMock:
+#   Enabled: false # (bkrapf) Could be activated. I think it is a good idea to use allow and except always the same way over all specs.
 
-RSpec/RepeatedExampleGroupDescription:
-  Exclude:
+# RSpec/RepeatedExampleGroupDescription:
+#   Exclude:
 
-RSpec/ScatteredLet:
-  Exclude:
+# RSpec/ScatteredLet:
+#   Exclude:
 
-RSpec/LeakyConstantDeclaration:
-  Exclude:
+# RSpec/LeakyConstantDeclaration:
+#   Exclude:
 
-RSpec/AnyInstance:
-  Exclude:
+# RSpec/AnyInstance:
+#   Exclude:
 
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/views/**/*.rb' # benkrapf: excluded by default.
+# RSpec/DescribeClass:
+#   Exclude:
+#     - 'spec/views/**/*.rb' # benkrapf: excluded by default.
 
-RSpec/EmptyExampleGroup:
-  Exclude:
+# RSpec/EmptyExampleGroup:
+#   Exclude:
 
-RSpec/LetSetup:
-  Exclude:
+# RSpec/LetSetup:
+#   Exclude:
 
-RSpec/NestedGroups:
-  Max: 4
-  Exclude:
+# RSpec/NestedGroups:
+#   Max: 4
+#   Exclude:
 
-RSpec/VoidExpect:
-  Exclude:
+# RSpec/VoidExpect:
+#   Exclude:
 
-RSpec/FilePath:
-  Exclude:
+# RSpec/FilePath:
+#   Exclude:
 
-##
-# (bkrapf) I don't know why we should use it. A spec is for a specific class, so the subject is an instance of this class.
-RSpec/NamedSubject:
-  Enabled: false
+# ##
+# # (bkrapf) I don't know why we should use it. A spec is for a specific class, so the subject is an instance of this class.
+# RSpec/NamedSubject:
+#   Enabled: false
 
-##
-# (bkrapf): Disabled cause you can not use the same context in different describe block.
-RSpec/RepeatedExampleGroupBody:
-  Enabled: false
+# ##
+# # (bkrapf): Disabled cause you can not use the same context in different describe block.
+# RSpec/RepeatedExampleGroupBody:
+#   Enabled: false
 
-RSpec/RepeatedDescription:
-  Exclude:
+# RSpec/RepeatedDescription:
+#   Exclude:
 
-RSpec/ScatteredSetup:
-  Exclude:
+# RSpec/ScatteredSetup:
+#   Exclude:
 
-RSpec/ExpectActual:
-  Exclude:
+# RSpec/ExpectActual:
+#   Exclude:
 
-RSpec/IteratedExpectation:
-  Exclude:
+# RSpec/IteratedExpectation:
+#   Exclude:
 
-RSpec/ExampleWithoutDescription:
-  Exclude:
+# RSpec/ExampleWithoutDescription:
+#   Exclude:
 
-RSpec/LeadingSubject:
-  Exclude:
+# RSpec/LeadingSubject:
+#   Exclude:
 
-RSpec/VerifiedDoubles:
-  Exclude:
+# RSpec/VerifiedDoubles:
+#   Exclude:
 
-# (bkrapf) disabled, because we "expect" multiple times in our specs.
-RSpec/MultipleExpectations:
-  Enabled: false
+# # (bkrapf) disabled, because we "expect" multiple times in our specs.
+# RSpec/MultipleExpectations:
+#   Enabled: false
 
-RSpec/ExampleLength:
-  Max: 30
-  Exclude:
+# RSpec/ExampleLength:
+#   Max: 30
+#   Exclude:
 
-RSpec/DescribedClass:
-  Exclude:
+# RSpec/DescribedClass:
+#   Exclude:
 
-Rails/ApplicationController:
-  Enabled: true
-  AutoCorrect: false
-  Exclude:
+# # Rails/ApplicationController:
+# #   Enabled: true
+# #   AutoCorrect: false
+# #   Exclude:
 
-RSpec/VariableName:
-  Enabled: true
-  EnforcedStyle: snake_case
-  Exclude:
-
-RSpec/MultipleMemoizedHelpers:
-  Enabled: true
-  AllowSubject: true
-  Max: 20
+# RSpec/MultipleMemoizedHelpers:
+#   Enabled: true
+#   AllowSubject: true
+#   Max: 20
 
 Style/OpenStructUse:
   Enabled: true
 
-Rails/I18nLocaleAssignment:
-  Enabled: true
+# Rails/I18nLocaleAssignment:
+#   Enabled: true
 
 Lint/AmbiguousOperatorPrecedence:
   Enabled: true
 
-RSpec/IdenticalEqualityAssertion:
-  Enabled: true
+# RSpec/IdenticalEqualityAssertion:
+#   Enabled: true
 
-RSpec/ExcessiveDocstringSpacing:
-  Enabled: true
+# RSpec/ExcessiveDocstringSpacing:
+#   Enabled: true
 
-RSpec/SubjectDeclaration:
-  Enabled: true
+# RSpec/SubjectDeclaration:
+#   Enabled: true
 
-Rails/HasManyOrHasOneDependent:
-  Enabled: true
-  Include: [ 'app/models/*/.rb' ]
+# Rails/HasManyOrHasOneDependent:
+#   Enabled: true
+#   Include: [ 'app/models/*/.rb' ]
 
-Rails/ExpandedDateRange:
-  Enabled: true
+# Rails/ExpandedDateRange:
+#   Enabled: true
 
 Lint/DeprecatedConstants:
   Enabled: true
 
-Rails/DurationArithmetic:
-  Enabled: true
+# Rails/DurationArithmetic:
+#   Enabled: true
 
-Rails/CompactBlank:
-  Enabled: true
+# Rails/CompactBlank:
+#   Enabled: true
 
-Rails/RedundantPresenceValidationOnBelongsTo:
-  Enabled: true
+# Rails/RedundantPresenceValidationOnBelongsTo:
+#   Enabled: true
 
-FactoryBot/SyntaxMethods:
-  Enabled: true
+# FactoryBot/SyntaxMethods:
+#   Enabled: true
 
 Style/FileWrite:
   Enabled: true
@@ -978,11 +981,11 @@ Style/FileRead:
 Style/CollectionCompact:
   Enabled: true
 
-Performance/StringIdentifierArgument:
-  Enabled: true
+# Performance/StringIdentifierArgument:
+#   Enabled: true
 
-RSpec/ChangeByZero:
-  Enabled: true
+# RSpec/ChangeByZero:
+#   Enabled: true
 
 Style/HashSyntax:
   Enabled: true
@@ -991,8 +994,8 @@ Style/HashSyntax:
   UseHashRocketsWithSymbolValues: false
   PreferHashRocketsForNonAlnumEndingSymbols: false
 
-Rails/I18nLocaleTexts:
-  Enabled: true
+# Rails/I18nLocaleTexts:
+#   Enabled: true
 
 Layout/ExtraSpacing:
   Enabled: true
@@ -1004,34 +1007,34 @@ Style/ObjectThen:
   Enabled: true
   EnforcedStyle: then
 
-Rails/RootPublicPath:
-  Enabled: true
+# Rails/RootPublicPath:
+#   Enabled: true
 
-Rails/TransactionExitStatement:
-  Enabled: true
+# Rails/TransactionExitStatement:
+#   Enabled: true
 
-Rails/DuplicateAssociation:
-  Enabled: true
+# Rails/DuplicateAssociation:
+#   Enabled: true
 
-Rails/DuplicateScope:
-  Enabled: true
+# Rails/DuplicateScope:
+#   Enabled: true
 
-Rails/DeprecatedActiveModelErrorsMethods:
-  Enabled: true
+# Rails/DeprecatedActiveModelErrorsMethods:
+#   Enabled: true
 
-RSpec/VerifiedDoubleReference:
-  Enabled: true
-  EnforcedStyle: constant
+# RSpec/VerifiedDoubleReference:
+#   Enabled: true
+#   EnforcedStyle: constant
 
-RSpec/BeEq:
-  Enabled: true
+# RSpec/BeEq:
+#   Enabled: true
 
-RSpec/BeEql:
-  Enabled: true
+# RSpec/BeEql:
+#   Enabled: true
 
-RSpec/BeNil:
-  Enabled: true
-  EnforcedStyle: be_nil
+# RSpec/BeNil:
+#   Enabled: true
+#   EnforcedStyle: be_nil
 
 Style/FetchEnvVar:
   Enabled: true
@@ -1075,30 +1078,30 @@ Layout/SpaceInsideBlockBraces:
   EnforcedStyleForEmptyBraces: no_space
   SpaceBeforeBlockParameters: true
 
-RSpec/NoExpectationExample:
-  Enabled: true
+# RSpec/NoExpectationExample:
+#   Enabled: true
 
 # (sascha) the cop does not recognize if a statement is continued in the next line
 # (bkrapf) currently there is no reason to activate this cop. Check again and again in the future.
 Style/OperatorMethodCall:
   Enabled: false
 
-RSpec/Rails/InferredSpecType:
-  Enabled: true
+# RSpec/Rails/InferredSpecType:
+#   Enabled: true
 
-Rails/ActionOrder:
-  Enabled: true
-  ExpectedOrder: ['index', 'show', 'new', 'edit', 'create', 'update', 'destroy']
-  Include: ['app/controllers/**/*.rb']
+# Rails/ActionOrder:
+#   Enabled: true
+#   ExpectedOrder: ['index', 'show', 'new', 'edit', 'create', 'update', 'destroy']
+#   Include: ['app/controllers/**/*.rb']
 
-Rails/ActionControllerFlashBeforeRender:
-  Enabled: true
+# Rails/ActionControllerFlashBeforeRender:
+#   Enabled: true
 
 Style/RedundantConstantBase:
   Enabled: false # Sometimes it leads to an error if it is not set.
 
-RSpec/PendingWithoutReason:
-  Enabled: true
+# RSpec/PendingWithoutReason:
+#   Enabled: true
 
 Style/MinMaxComparison:
   Enabled: true
@@ -1106,8 +1109,8 @@ Style/MinMaxComparison:
 Style/ConcatArrayLiterals:
   Enabled: true
 
-Rails/ApplicationRecord:
-  Enabled: true
+# Rails/ApplicationRecord:
+#   Enabled: true
 
 Style/SafeNavigation:
   Enabled: true
@@ -1130,8 +1133,8 @@ Lint/FormatParameterMismatch:
 Lint/RedundantCopDisableDirective:
   Enabled: true
 
-Rails/ResponseParsedBody:
-  Enabled: true
+# Rails/ResponseParsedBody:
+#   Enabled: true
 
 Metrics/CollectionLiteralLength:
   Enabled: true
@@ -1146,24 +1149,24 @@ Style/InverseMethods:
 Lint/RedundantRequireStatement:
   Enabled: true
 
-Rails/WhereNotWithMultipleConditions:
-  Enabled: false # todo: throwing errors at the moment, can be activated later.
+# Rails/WhereNotWithMultipleConditions:
+#   Enabled: false # todo: throwing errors at the moment, can be activated later.
 
-RSpec/MatchArray:
-  Enabled: false # todo: auto-correction does not work at the moment.
+# RSpec/MatchArray:
+#   Enabled: false # todo: auto-correction does not work at the moment.
 
-RSpec/EmptyLineAfterExampleGroup:
-  Enabled: true
+# RSpec/EmptyLineAfterExampleGroup:
+#   Enabled: true
 
-RSpec/Rails/HaveHttpStatus:
-  Enabled: true
+# RSpec/Rails/HaveHttpStatus:
+#   Enabled: true
 
-RSpec/BeEmpty:
-  Enabled: true
+# RSpec/BeEmpty:
+#   Enabled: true
 
-Rails/ThreeStateBooleanColumn:
-  Enabled: true
-  Include: ['db/**/*.rb']
+# Rails/ThreeStateBooleanColumn:
+#   Enabled: true
+#   Include: ['db/**/*.rb']
 
 Style/RedundantFilterChain:
   Enabled: true
@@ -1184,17 +1187,17 @@ Style/YAMLFileRead:
 Style/ReturnNilInPredicateMethodDefinition:
   Enabled: true
 
-Rails/Present:
-  Enabled: true
+# Rails/Present:
+#   Enabled: true
 
 Bundler/OrderedGems:
   Enabled: true
 
-RSpec/ReceiveMessages:
-  Enabled: true
+# RSpec/ReceiveMessages:
+#   Enabled: true
 
-Performance/MapMethodChain:
-  Enabled: true
+# Performance/MapMethodChain:
+#   Enabled: true
 
 Style/ArgumentsForwarding:
   Enabled: true
@@ -1204,38 +1207,38 @@ Style/RedundantReturn:
   Enabled: true
   AllowMultipleReturnValues: false
 
-Rails/UnusedRenderContent:
-  Enabled: true
-  Severity: warning
+# Rails/UnusedRenderContent:
+#   Enabled: true
+#   Severity: warning
 
 Layout/MultilineOperationIndentation:
   Enabled: true
   EnforcedStyle: aligned
   IndentationWidth:
 
-Rails/EnvLocal: # https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsenvlocal
-  Enabled: false # (bkrapf) disabled for now, maybe enable in the future.
+# Rails/EnvLocal: # https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsenvlocal
+#   Enabled: false # (bkrapf) disabled for now, maybe enable in the future.
 
-RSpec/SpecFilePathFormat:
-  Enabled: true
-  Include: ['**/*_spec.rb']
-  Exclude: ['**/spec/routing/**/*']
-  CustomTransform: {"RuboCop": "rubocop", "RSpec": "rspec"}
-  IgnoreMethods: false
-  IgnoreMetadata: { "type": "routing" }
+# RSpec/SpecFilePathFormat:
+#   Enabled: true
+#   Include: ['**/*_spec.rb']
+#   Exclude: ['**/spec/routing/**/*']
+#   CustomTransform: {"RuboCop": "rubocop", "RSpec": "rspec"}
+#   IgnoreMethods: false
+#   IgnoreMetadata: { "type": "routing" }
 
-Rails/FindEach:
-  Enabled: true
-  AllowedMethods: ['order', 'limit', 'select', 'lock']
-  AllowedPatterns: []
+# Rails/FindEach:
+#   Enabled: true
+#   AllowedMethods: ['order', 'limit', 'select', 'lock']
+#   AllowedPatterns: []
 
 Layout/MultilineMethodCallBraceLayout:
   Enabled: true
   EnforcedStyle: symmetrical
 
-Rails/RedundantActiveRecordAllMethod:
-  Enabled: true
-  AllowedReceivers: ['ActionMailer::Preview', 'ActiveSupport::TimeZone']
+# Rails/RedundantActiveRecordAllMethod:
+#   Enabled: true
+#   AllowedReceivers: ['ActionMailer::Preview', 'ActiveSupport::TimeZone']
 
 Style/SelfAssignment:
   Enabled: true

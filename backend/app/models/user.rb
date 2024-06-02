@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_many :messages, dependent: :destroy
 
@@ -14,9 +16,9 @@ class User < ApplicationRecord
   end
 
   def validate_json_web_token_presence
-    if self.json_web_token.blank?
-      errors.add(:json_web_token, "can't be blank")
-      throw(:abort)
-    end
+    return if json_web_token.present?
+
+    errors.add(:json_web_token, "can't be blank")
+    throw(:abort)
   end
 end

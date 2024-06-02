@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test 'email should be present' do
@@ -14,7 +16,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'email should be unique and case-insensitive' do
-    existing_user = User.create(email: 'test@foo.com')
+    User.create(email: 'test@foo.com')
     new_user = User.new(email: 'Test@foo.com')
 
     assert_not new_user.save, 'Saved user with a non-unique email'
@@ -30,7 +32,7 @@ class UserTest < ActiveSupport::TestCase
     user = User.create(email: 'test@foo.com')
 
     assert_raises(ActiveRecord::RecordNotSaved) do
-      user.update!(json_web_token: "")
+      user.update!(json_web_token: '')
     end
   end
 
@@ -43,8 +45,8 @@ class UserTest < ActiveSupport::TestCase
   test 'all messages related to user should be destroyed, when user is destroyed' do
     user = User.create(email: 'test@foo.com')
 
-    message1 = user.messages.create(title: 'message1', body: 'first message')
-    message2 = user.messages.create(title: 'message2', body: 'second message')
+    user.messages.create(title: 'message1', body: 'first message')
+    user.messages.create(title: 'message2', body: 'second message')
 
     assert_difference('Message.count', -2) do
       user.destroy
