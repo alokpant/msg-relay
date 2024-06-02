@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
+  # INDEX method - Start #
   test 'should return empty array when no message exist' do
     get messages_url, as: :json
     assert_response :success
@@ -86,7 +87,9 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     json_response = JSON.parse(@response.body)
     assert_equal json_response.length, 10
   end
+  # INDEX method - end #
 
+  # SHOW method - Start #
   test 'should show message if present' do
     20.times do |i|
       user = User.create(email: "newuser#{i}@example.com")
@@ -112,4 +115,147 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     json_response = JSON.parse(@response.body)
     assert_equal('Not Found', json_response['error'])
   end
+  # SHOW method - end #
+
+  # CREATE method - Start #
+  test 'should create message' do
+    user = User.create(email: 'newuser@example.com')
+
+    assert_difference('Message.count') do
+      post messages_url,
+           params: {
+             message: {
+               title: 'New Title',
+               body: 'New Body'
+             },
+             user_id: user.id
+           },
+           headers: { 'Authorization' => user.json_web_token },
+           as: :json
+    end
+    assert_response :created
+
+    json_response = JSON.parse(@response.body)
+    assert_equal json_response['user_id'], user.id
+  end
+
+  test 'should not create message if user does not exist' do
+    user = User.create(email: 'newuser@example.com')
+
+    post messages_url,
+         params: {
+           message: {
+             title: 'New Title',
+             body: 'New Body'
+           },
+           user_id: 9999
+         },
+         headers: { 'Authorization' => user.json_web_token },
+         as: :json
+
+    assert_response :unauthorized
+    json_response = JSON.parse(@response.body)
+    assert_equal('Unauthorized', json_response['error'])
+  end
+
+  test 'should not create message without authentication' do
+    post messages_url,
+         params: {
+           message: {
+             title: 'New Title',
+             body: 'New Body'
+           }
+         },
+         as: :json
+
+    assert_response :unauthorized
+    json_response = JSON.parse(@response.body)
+    assert_equal('Unauthorized', json_response['error'])
+  end
+  # CREATE method - End #
+
+  # UPDATE method - Start #
+  test 'should update message' do
+    user = User.create(email: 'newuser@example.com')
+    message = user.messages.create(title: 'New Title', body: 'New body')
+
+    put message_url(message.id),
+        params: {
+          message: {
+            title: 'New Title 2',
+            body: 'New Body 2'
+          },
+          user_id: user.id
+        },
+        headers: { 'Authorization' => user.json_web_token },
+        as: :json
+
+    assert_response :ok
+
+    json_response = JSON.parse(@response.body)
+    assert_equal json_response['user_id'], user.id
+    assert_equal json_response['title'], 'New Title 2'
+    assert_equal json_response['body'], 'New Body 2'
+  end
+
+  test 'should not update message if user does not exist' do
+    user = User.create(email: 'newuser@example.com')
+    message = user.messages.create(title: 'New Title', body: 'New body')
+
+    put message_url(message.id),
+        params: {
+          message: {
+            title: 'New Title 2',
+            body: 'New Body 2'
+          },
+          user_id: 9999
+        },
+        headers: { 'Authorization' => user.json_web_token },
+        as: :json
+
+    assert_response :unauthorized
+    json_response = JSON.parse(@response.body)
+    assert_equal('Unauthorized', json_response['error'])
+  end
+
+  test 'should not update message without authentication' do
+    user = User.create(email: 'newuser@example.com')
+    message = user.messages.create(title: 'New Title', body: 'New body')
+
+    put message_url(message.id),
+        params: {
+          message: {
+            title: 'New Title 2',
+            body: 'New Body 2'
+          },
+          user_id: user.id
+        },
+        as: :json
+
+    assert_response :unauthorized
+    json_response = JSON.parse(@response.body)
+    assert_equal('Unauthorized', json_response['error'])
+  end
+
+  test 'should not update message if message does not belong to the user' do
+    user = User.create(email: 'newuser@example.com')
+    user1 = User.create(email: 'newuser1@example.com')
+    message = user.messages.create(title: 'New Title', body: 'New body')
+
+    put message_url(message.id),
+        params: {
+          message: {
+            title: 'New Title 2',
+            body: 'New Body 2'
+          },
+          user_id: user1.id
+        },
+        headers: { 'Authorization' => user1.json_web_token },
+        as: :json
+
+    assert_response :not_found
+    json_response = JSON.parse(@response.body)
+    assert_equal('Not Found', json_response['error'])
+  end
+  # UPDATE method - End #
 end
