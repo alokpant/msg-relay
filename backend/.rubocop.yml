@@ -1,0 +1,1252 @@
+git require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-thread_safety
+  - rubocop-rspec
+  - rubocop-factory_bot
+
+AllCops:
+  TargetRubyVersion: 3.2.2
+  NewCops: enable
+  Exclude:
+    - '**/node_modules/**/*'
+    - 'local_gems/**/*'
+    - '.bundle/**/*'
+    - '.yardoc/**/*'
+    - 'codeclimate/**/*'
+    - 'coverage/**/*'
+    - 'config/**/*'
+    - 'data/**/*'
+    - 'db/archived_migrations/**/*'
+    - 'db/migrate/*_init_schema.rb'
+    - 'db/dummy/*'
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+    - 'doc/**/*'
+    - 'files/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
+    - 'tmp/**/*'
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented_relative_to_receiver
+
+Style/ClassEqualityComparison:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+  EnforcedStyle: 'no_empty_lines'
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+  EmptyLineBetweenMethodDefs: true
+  EmptyLineBetweenClassDefs: true
+  EmptyLineBetweenModuleDefs: true
+  AllowAdjacentOneLineDefs: true
+  NumberOfEmptyLines: 1
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: true
+
+Layout/LineLength:
+  Enabled: true
+  AutoCorrect: true
+  Max: 160
+  Exclude:
+    - 'Gemfile' # Excluded by default
+    - 'Gemfile.lock' # Excluded by default
+
+Metrics/AbcSize: # bkrapf: http://wiki.c2.com/?AbcMetric
+  Enabled: true
+  Max: 25
+  Exclude:
+    - 'config/initializers/**/*' # exclude all initializers
+    - 'db/**/*' # exclude all migrations
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
+  PreferredName: exception
+
+Metrics/BlockLength: # bkrapf: deactivated because there is already a limitation of the line and method length.
+  Enabled: true
+  CountComments: false
+  Max: 25
+  CountAsOne: []
+  AllowedMethods: ['refine']
+  AllowedPatterns: []
+  Exclude:
+    - '**/*.gemspec'
+    - 'lib/tasks/**/*.rake'
+    - 'Gemfile'
+
+Metrics/ParameterLists:
+  Enabled: true
+  Max: 5
+  MaxOptionalParameters: 5
+  CountKeywordArgs: true
+  Exclude: ['initialize', 'new']
+
+Metrics/CyclomaticComplexity: # bkrapf: https://rubocop.readthedocs.io/en/latest/cops_metrics/#metricscyclomaticcomplexity
+  Enabled: true
+  Max: 12
+  Exclude:
+
+Metrics/PerceivedComplexity: # bkrapf: https://rubocop.readthedocs.io/en/latest/cops_metrics/#metricsperceivedcomplexity
+  Max: 12
+  Exclude:
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 20
+  Exclude:
+    - 'db/**/*' # Excluded by default.
+
+Layout/IndentationStyle:
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: 'with_first_argument'
+
+Layout/BlockAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: 'start_of_block'
+
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: 'line_count_based'
+
+Layout/BlockEndNewline:
+  Enabled: true
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+  EnforcedStyle: 'special_for_inner_method_call_in_parentheses'
+
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: 'special_inside_parentheses'
+
+Layout/FirstParameterIndentation:
+  Enabled: true
+  EnforcedStyle: 'consistent'
+
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedHashRocketStyle: 'key'
+  EnforcedColonStyle: 'key'
+  EnforcedLastArgumentHashStyle: 'always_inspect'
+
+Layout/IndentationWidth:
+  Enabled: true
+  Width: 2
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+  EnforcedStyle: 'symmetrical'
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: 'with_first_parameter'
+
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+  AllowAliasSyntax: true
+  AllowedMethods: [ 'alias_method', 'public', 'protected', 'private' ]
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
+
+Lint/EmptyBlock:
+  Enabled: true
+  AllowComments: true
+  AllowEmptyLambdas: true
+
+Lint/RedundantDirGlobSort:
+  Enabled: true
+
+Lint/DuplicateBranch:
+  Enabled: true
+  IgnoreLiteralBranches: false
+  IgnoreConstantBranches: false
+
+Lint/AssignmentInCondition:
+  Enabled: true
+  AllowSafeAssignment: true
+
+Lint/RedundantStringCoercion:
+  Enabled: true
+
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+
+Lint/EmptyClass:
+  Enabled: true
+  AllowComments: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Lint/SymbolConversion:
+  Enabled: false
+  EnforcedStyle: 'strict'
+
+Style/AccessorGrouping:
+  Enabled: true
+  EnforcedStyle: 'grouped'
+
+Style/BisectedAttrAccessor:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
+  EnforcedStyle: 'scientific'
+
+Style/RedundantAssignment:
+  Enabled: true
+
+Style/RedundantFetchBlock:
+  Enabled: true
+  SafeForConstants: false
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+
+Style/RedundantRegexpEscape:
+  Enabled: true
+
+Style/SlicingWithRange:
+  Enabled: true
+
+Lint/BinaryOperatorWithIdenticalOperands:
+  Enabled: true
+
+Lint/DuplicateElsifCondition:
+  Enabled: true
+
+Lint/DuplicateRescueException:
+  Enabled: true
+
+Lint/EmptyConditionalBody:
+  Enabled: true
+
+Lint/FloatComparison:
+  Enabled: false # (bkrapf) disabled for now, because it is not a problem to compare floats.
+
+Lint/MissingSuper:
+  Enabled: true
+
+Lint/OutOfRangeRegexpRef:
+  Enabled: true
+
+Lint/SelfAssignment:
+  Enabled: true
+
+Lint/TopLevelReturnWithArgument:
+  Enabled: true
+
+Lint/UnreachableLoop:
+  Enabled: true
+
+Style/ArrayCoercion:
+  Enabled: true
+
+Style/CaseLikeIf:
+  Enabled: true
+
+Style/ExplicitBlockArgument:
+  Enabled: true
+
+Style/GlobalStdStream:
+  Enabled: true
+
+Style/HashAsLastArrayItem:
+  Enabled: true
+
+Style/HashLikeCase:
+  Enabled: true
+
+Style/StringChars:
+  Enabled: true
+
+Style/RedundantParentheses:
+  Enabled: true
+
+Style/NilLambda:
+  Enabled: true
+
+Style/RedundantArgument:
+  Enabled: true
+
+Style/OptionalBooleanParameter:
+  Enabled: true
+  Exclude:
+
+Style/RedundantFileExtensionInRequire:
+  Enabled: true
+
+Style/SingleArgumentDig:
+  Enabled: true
+
+Style/StringConcatenation:
+  Enabled: true
+  Exclude:
+
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
+  Include: ['app/models/**/*.rb']
+
+Rails/EnvironmentVariableAccess:
+  Enabled: true
+  AllowReads: true
+  AllowWrites: false
+  Exclude:
+
+Rails/FindById:
+  Enabled: true
+
+Rails/Inquiry:
+  Enabled: true
+
+Rails/MailerName:
+  Enabled: true
+
+Rails/MatchRoute:
+  Enabled: true
+
+Rails/NegateInclude:
+  Enabled: true
+
+Rails/Pluck:
+  Enabled: true
+
+Rails/PluckInWhere:
+  Enabled: true
+
+Rails/RenderInline:
+  Enabled: true
+
+Rails/RenderPlainText:
+  Enabled: true
+
+Rails/ShortI18n:
+  Enabled: true
+
+Rails/WhereExists:
+  Enabled: true
+
+Layout/BeginEndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: 'start_of_line'
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: true
+  Exclude:
+    - 'lib/tasks/**/*.rake' # Excluded by default.
+
+Lint/DuplicateRequire:
+  Enabled: true
+
+Lint/EmptyFile:
+  Enabled: true
+  AllowComments: true
+
+Lint/IdentityComparison:
+  Enabled: true
+
+Lint/TrailingCommaInAttributeDeclaration:
+  Enabled: true
+
+Lint/UselessMethodDefinition:
+  Enabled: true
+
+Lint/UselessTimes:
+  Enabled: true
+
+Style/CombinableLoops:
+  Enabled: true
+  Exclude:
+
+Style/KeywordParametersOrder:
+  Enabled: true
+
+Style/RedundantSelfAssignment:
+  Enabled: true
+
+Style/SoleNestedConditional:
+  Enabled: true
+  AllowModifier: false
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyleAlignWith, AutoCorrect, Severity.
+# SupportedStylesAlignWith: keyword, variable, start_of_line
+Layout/EndAlignment:
+  Enabled: true
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, IndentationWidth.
+# SupportedStyles: special_inside_parentheses, consistent, align_brackets
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+  AutoCorrect: true
+  EnforcedStyle: 'special_inside_parentheses'
+  Exclude:
+
+Lint/BooleanSymbol:
+  Enabled: true
+  Exclude:
+
+Lint/DuplicateHashKey:
+  Enabled: true
+  Exclude:
+
+Lint/RescueException:
+  Enabled: true
+  Exclude:
+
+Lint/UnreachableCode:
+  Enabled: true
+  Exclude:
+
+Lint/UriEscapeUnescape:
+  Enabled: true
+  Exclude:
+
+Lint/UselessAssignment:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: CheckForMethodsWithNoSideEffects.
+Lint/Void:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: CountBlocks.
+Metrics/BlockNesting:
+  Enabled: true
+  CountBlocks: false
+  Max: 3
+  Exclude:
+
+# Configuration parameters: CountComments.
+Metrics/ClassLength:
+  Enabled: true
+  CountComments: false
+  Max: 350
+  Exclude:
+    - 'Rakefile' # bkrapf: exclude by default
+    - 'Guardfile' # bkrapf: exclude by default
+    - '**/*.rake' # bkrapf: exclude by default
+    - 'spec/**/*.rb' # bkrapf: exclude by default
+    - 'test/**/*.rb' # bkrapf: exclude by default
+    - 'db/migrate/**/*.rb' # bkrapf: exclude by default
+    - 'config/environments/**/*.rb' # bkrapf: exclude by default
+    - 'config/initializers/**/*.rb' # bkrapf: exclude by default
+    - 'app/views/**/*.jbuilder' # bkrapf: exclude by default
+    - 'config/deploy/staging.rb' # bkrapf: exclude by default
+    - 'config/deploy/production.rb' # bkrapf: exclude by default
+    - 'config/routes/*.rb' # bkrapf: exclude by default
+    - 'lib/tasks/**/*.rb' # bkrapf: exclude by default
+    - 'db/migrate/schema.rb' # bkrapf: exclude by default
+    - 'app/models/**/*.rb' # bkrapf: exclude by default
+    - 'app/controllers/params/**/*.rb' # bkrapf: exclude by default
+
+# Configuration parameters: CountComments.
+Metrics/ModuleLength:
+  Enabled: true
+  Max: 120
+  CountComments: false
+  Exclude:
+
+Naming/VariableNumber:
+  Enabled: true
+  EnforcedStyle: 'snake_case'
+  CheckMethodNames: true
+  CheckSymbols: true
+  AllowedIdentifiers: [ 'capture3', 'iso8601', 'rfc1123_date', 'rfc822', 'rfc2822', 'rfc3339', 'hp_name_b54f1ab53b565161ec97' ]
+  AllowedPatterns: []
+
+Naming/AccessorMethodName:
+  Enabled: true
+  Exclude:
+    - 'app/channels/**/*'  # bkrapf: exclude by default
+    - 'app/controllers/**/*'  # bkrapf: exclude by default
+    - 'app/helpers/**/*' # bkrapf: exclude by default
+    - 'app/jobs/**/*' # bkrapf: exclude by default
+    - 'app/lib/**/*' # bkrapf: exclude by default
+    - 'app/mailers/**/*' # bkrapf: exclude by default
+    - 'app/serializers/**/*' # bkrapf: exclude by default
+    - 'app/views/**/*' # bkrapf: exclude by default
+    - 'app/workers/**/*' # bkrapf: exclude by default
+
+# Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts, AllowedAcronyms.
+# AllowedAcronyms: CLI, DSL, ACL, API, ASCII, CPU, CSS, DNS, EOF, GUID, HTML, HTTP, HTTPS, ID, IP, JSON, LHS, QPS, RAM, RHS, RPC, SLA, SMTP, SQL, SSH, TCP, TLS, TTL, UDP, UI, UID, UUID, URI, URL, UTF8, VM, XML, XMPP, XSRF, XSS
+Naming/FileName:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: EnforcedStyleForLeadingUnderscores.
+# SupportedStylesForLeadingUnderscores: disallowed, required, optional
+Naming/MemoizedInstanceVariableName:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros.
+# NamePrefix: is_, has_, have_
+# ForbiddenPrefixes: is_, has_, have_
+# AllowedMethods: is_a?
+# MethodDefinitionMacros: define_method, define_singleton_method
+Naming/PredicateName:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*' # bkrapf: exclude by default
+
+Style/ClassVars:
+  Enabled: true
+  Exclude:
+
+Style/CommentedKeyword:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: annotated, template, unannotated
+Style/FormatStringToken:
+  Enabled: true
+  Exclude:
+
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+  AllowedMethods: [ 'nonzero?' ]
+
+Style/HashExcept:
+  Enabled: true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: 'single_quotes'
+  ConsistentQuotesInMultiline: false
+
+
+Style/NegatedIfElseCondition:
+  Enabled: true
+
+Style/HashConversion:
+  Enabled: true
+  AllowSplatArgument: true
+
+# Configuration parameters: AllowIfModifier.
+Style/IfInsideElse:
+  Enabled: true
+  Exclude:
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: 'always'
+
+Style/MixinUsage:
+  Enabled: true
+  Exclude:
+
+Style/MultilineBlockChain:
+  Enabled: true
+  Exclude:
+
+Style/MultilineTernaryOperator:
+  Enabled: true
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: literals, strict
+Style/MutableConstant:
+  Enabled: true
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect, EnforcedStyle, IgnoredMethods.
+# SupportedStyles: predicate, comparison
+Style/NumericPredicate:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*' # bkrapf: exclude by default
+
+# Cop supports --auto-correct.
+# Configuration parameters: AllowAsExpressionSeparator.
+Style/Semicolon:
+  Enabled: true
+  AllowAsExpressionSeparator: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+  Exclude:
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: 'compact'
+  Exclude:
+    - 'lib/tasks/**/*' # bkrapf: exclude by default
+    - 'config/application.rb' # (bkrapf) false positive
+
+Style/SymbolArray:
+  Enabled: true
+  EnforcedStyle: 'percent'
+  MinSize: 2
+
+Style/IfUnlessModifier:
+  Enabled: true
+
+Style/RedundantFreeze:
+  Enabled: true
+
+Style/SymbolProc:
+  Enabled: true
+  AllowMethodsWithArguments: true
+  # AllowedMethods
+  AllowedPatterns: []
+  AllowComments: true
+
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - 'db/**/*' # bkrapf: exclude by default
+    - 'lib/tasks/**/*' # bkrapf: exclude by default
+
+Style/GuardClause:
+  Enabled: true
+  MinBodyLength: 1
+  AllowConsecutiveConditionals: false
+  Exclude:
+
+Layout/MultilineBlockLayout:
+  Enabled: true
+  Exclude:
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+  Exclude:
+
+Layout/TrailingWhitespace:
+  Enabled: true
+  Exclude:
+
+Performance/RedundantEqualityComparisonBlock:
+  Enabled: true
+
+Performance/MapCompact:
+  Enabled: true
+
+Performance/MethodObjectAsBlock:
+  Enabled: true # (bkrapf) enable it!
+
+# Cop supports --auto-correct.
+Performance/Count:
+  Enabled: true
+  Exclude:
+
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect.
+Performance/TimesMap:
+  Enabled: true
+  Exclude:
+
+Performance/UnfreezeString:
+  Enabled: true
+  Exclude:
+
+Performance/RedundantMerge:
+  Enabled: true
+  Exclude:
+
+Performance/AncestorsInclude:
+  Enabled: true
+
+Performance/BigDecimalWithNumericArgument:
+  Enabled: true
+
+Performance/RedundantSortBlock:
+  Enabled: true
+
+Performance/RedundantStringChars:
+  Enabled: true
+
+Performance/ReverseFirst:
+  Enabled: true
+
+Performance/SortReverse:
+  Enabled: true
+
+Performance/Squeeze:
+  Enabled: true
+
+Performance/StringInclude:
+  Enabled: true
+
+Performance/Sum:
+  Enabled: true
+  Exclude:
+
+Performance/CollectionLiteralInLoop:
+  Enabled: true
+  Exclude:
+
+Rails/DynamicFindBy:
+  Exclude:
+
+# Configuration parameters: Include.
+# Include: app/models/**/*.rb
+Rails/ActiveRecordOverride:
+  Exclude:
+
+# Configuration parameters: Include.
+# Include: db/migrate/*.rb
+Rails/CreateTableWithTimestamps:
+  Exclude:
+
+# Configuration parameters: Include.
+# Include: app/**/*.rb, config/**/*.rb, lib/**/*.rb
+Rails/Exit:
+  Exclude:
+    - 'lib/**/*.rake'
+
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: slashes, arguments
+Rails/FilePath:
+  Enabled: true
+  EnforcedStyle: 'arguments'
+
+# Configuration parameters: Include.
+# Include: app/controllers/**/*.rb
+Rails/LexicallyScopedActionFilter:
+  Enabled: false # disabled because of Lint/UselessMethodDefinition and rubocop-todo is not added automatically.
+  Include: ['app/controllers/**/*.rb', 'app/mailers/**/*.rb']
+
+Rails/OutputSafety:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: Include.
+# Include: db/migrate/*.rb
+Rails/ReversibleMigration:
+  Enabled: true
+  Exclude:
+
+# Configuration parameters: Environments.
+# Environments: development, test, production
+Rails/UnknownEnv:
+  Enabled: true
+  Environments: [ 'development', 'test', 'production', 'staging' ]
+  Exclude:
+
+Rails/BulkChangeTable:
+  Enabled: false
+  Database: postgresql
+  Include: ['db/migrate/*.rb']
+
+Rails/InverseOf: # bkrapf: https://www.viget.com/articles/exploring-the-inverse-of-option-on-rails-model-associations/
+  Enabled: true
+  Exclude:
+
+Rails/Output:
+  Enabled: true
+  Exclude:
+    - 'config/deploy/*.rb' # bkrapf: exclude by default
+    - 'lib/tasks/**/*' # bkrapf: exclude by default
+    - 'db/**/**.rb' # bkrapf: exclude by default
+
+Rails/ReflectionClassName:
+  Enabled: true
+  Exclude:
+
+Rails/SkipsModelValidations:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*.rb' # bkrapf: exclude by default
+    - 'db/migrate/**/*.rb' # bkrapf: exclude by default
+
+Style/AsciiComments:
+  Enabled: false
+
+Rails/RakeEnvironment: # bkrapf: there are also tasks that do not run in the rails environment.
+  Enabled: false
+
+Rails/AfterCommitOverride:
+  Enabled: true
+
+Rails/SquishedSQLHeredocs:
+  Enabled: true
+
+Rails/WhereNot:
+  Enabled: true
+
+RSpec/InstanceVariable: # (bkrapf) Cop is disabled because we configure the test environment in our before and after blocks.
+  Enabled: false
+
+RSpec/BeforeAfterAll: # (bkrapf) Cop is disabled because we configure the test environment in our before and after blocks.
+  Enabled: false
+
+RSpec/MessageSpies:
+  Exclude:
+
+RSpec/RepeatedExample:
+  Exclude:
+
+RSpec/ContextWording:
+  Exclude:
+
+RSpec/MessageChain:
+  Exclude:
+
+RSpec/SubjectStub:
+  Exclude:
+
+RSpec/StubbedMock:
+  Enabled: false # (bkrapf) Could be activated. I think it is a good idea to use allow and except always the same way over all specs.
+
+RSpec/RepeatedExampleGroupDescription:
+  Exclude:
+
+RSpec/ScatteredLet:
+  Exclude:
+
+RSpec/LeakyConstantDeclaration:
+  Exclude:
+
+RSpec/AnyInstance:
+  Exclude:
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/views/**/*.rb' # benkrapf: excluded by default.
+
+RSpec/EmptyExampleGroup:
+  Exclude:
+
+RSpec/LetSetup:
+  Exclude:
+
+RSpec/NestedGroups:
+  Max: 4
+  Exclude:
+
+RSpec/VoidExpect:
+  Exclude:
+
+RSpec/FilePath:
+  Exclude:
+
+##
+# (bkrapf) I don't know why we should use it. A spec is for a specific class, so the subject is an instance of this class.
+RSpec/NamedSubject:
+  Enabled: false
+
+##
+# (bkrapf): Disabled cause you can not use the same context in different describe block.
+RSpec/RepeatedExampleGroupBody:
+  Enabled: false
+
+RSpec/RepeatedDescription:
+  Exclude:
+
+RSpec/ScatteredSetup:
+  Exclude:
+
+RSpec/ExpectActual:
+  Exclude:
+
+RSpec/IteratedExpectation:
+  Exclude:
+
+RSpec/ExampleWithoutDescription:
+  Exclude:
+
+RSpec/LeadingSubject:
+  Exclude:
+
+RSpec/VerifiedDoubles:
+  Exclude:
+
+# (bkrapf) disabled, because we "expect" multiple times in our specs.
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 30
+  Exclude:
+
+RSpec/DescribedClass:
+  Exclude:
+
+Rails/ApplicationController:
+  Enabled: true
+  AutoCorrect: false
+  Exclude:
+
+RSpec/VariableName:
+  Enabled: true
+  EnforcedStyle: snake_case
+  Exclude:
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: true
+  AllowSubject: true
+  Max: 20
+
+Style/OpenStructUse:
+  Enabled: true
+
+Rails/I18nLocaleAssignment:
+  Enabled: true
+
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+
+RSpec/IdenticalEqualityAssertion:
+  Enabled: true
+
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+
+RSpec/SubjectDeclaration:
+  Enabled: true
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: true
+  Include: [ 'app/models/*/.rb' ]
+
+Rails/ExpandedDateRange:
+  Enabled: true
+
+Lint/DeprecatedConstants:
+  Enabled: true
+
+Rails/DurationArithmetic:
+  Enabled: true
+
+Rails/CompactBlank:
+  Enabled: true
+
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: true
+
+FactoryBot/SyntaxMethods:
+  Enabled: true
+
+Style/FileWrite:
+  Enabled: true
+
+Style/MapToHash:
+  Enabled: true
+
+Style/FileRead:
+  Enabled: true
+
+Style/CollectionCompact:
+  Enabled: true
+
+Performance/StringIdentifierArgument:
+  Enabled: true
+
+RSpec/ChangeByZero:
+  Enabled: true
+
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: ruby19_no_mixed_keys
+  EnforcedShorthandSyntax: never
+  UseHashRocketsWithSymbolValues: false
+  PreferHashRocketsForNonAlnumEndingSymbols: false
+
+Rails/I18nLocaleTexts:
+  Enabled: true
+
+Layout/ExtraSpacing:
+  Enabled: true
+  AllowForAlignment: true
+  AllowBeforeTrailingComments: false
+  ForceEqualSignAlignment: false
+
+Style/ObjectThen:
+  Enabled: true
+  EnforcedStyle: then
+
+Rails/RootPublicPath:
+  Enabled: true
+
+Rails/TransactionExitStatement:
+  Enabled: true
+
+Rails/DuplicateAssociation:
+  Enabled: true
+
+Rails/DuplicateScope:
+  Enabled: true
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: true
+
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+  EnforcedStyle: constant
+
+RSpec/BeEq:
+  Enabled: true
+
+RSpec/BeEql:
+  Enabled: true
+
+RSpec/BeNil:
+  Enabled: true
+  EnforcedStyle: be_nil
+
+Style/FetchEnvVar:
+  Enabled: true
+  AllowedVars: [ ]
+
+Style/RedundantInitialize:
+  Enabled: true
+  AllowComments: true
+
+Naming/BlockForwarding:
+  Enabled: true
+  EnforcedStyle: explicit
+  BlockForwardingName: block
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: true
+
+Layout/SpaceInsideParens:
+  Enabled: true
+  EnforcedStyle: no_space
+
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: normal
+
+Layout/LeadingEmptyLines:
+  Enabled: true
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+  EnforcedStyle: around
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: space
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+  SpaceBeforeBlockParameters: true
+
+RSpec/NoExpectationExample:
+  Enabled: true
+
+# (sascha) the cop does not recognize if a statement is continued in the next line
+# (bkrapf) currently there is no reason to activate this cop. Check again and again in the future.
+Style/OperatorMethodCall:
+  Enabled: false
+
+RSpec/Rails/InferredSpecType:
+  Enabled: true
+
+Rails/ActionOrder:
+  Enabled: true
+  ExpectedOrder: ['index', 'show', 'new', 'edit', 'create', 'update', 'destroy']
+  Include: ['app/controllers/**/*.rb']
+
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: true
+
+Style/RedundantConstantBase:
+  Enabled: false # Sometimes it leads to an error if it is not set.
+
+RSpec/PendingWithoutReason:
+  Enabled: true
+
+Style/MinMaxComparison:
+  Enabled: true
+
+Style/ConcatArrayLiterals:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: true
+
+Style/SafeNavigation:
+  Enabled: true
+  ConvertCodeThatCanStartToReturnNil: false
+  AllowedMethods: ['present?', 'blank?', 'presence', 'try', 'try!']
+  MaxChainLength: 2
+
+Style/ZeroLengthPredicate:
+  Enabled: true
+
+Style/RedundantEach:
+  Enabled: true
+
+Style/ArrayIntersect:
+  Enabled: true
+
+Lint/FormatParameterMismatch:
+  Enabled: true
+
+Lint/RedundantCopDisableDirective:
+  Enabled: true
+
+Rails/ResponseParsedBody:
+  Enabled: true
+
+Metrics/CollectionLiteralLength:
+  Enabled: true
+  LengthThreshold: 250
+
+Style/FileEmpty:
+  Enabled: true
+
+Style/InverseMethods:
+  Enabled: true
+
+Lint/RedundantRequireStatement:
+  Enabled: true
+
+Rails/WhereNotWithMultipleConditions:
+  Enabled: false # todo: throwing errors at the moment, can be activated later.
+
+RSpec/MatchArray:
+  Enabled: false # todo: auto-correction does not work at the moment.
+
+RSpec/EmptyLineAfterExampleGroup:
+  Enabled: true
+
+RSpec/Rails/HaveHttpStatus:
+  Enabled: true
+
+RSpec/BeEmpty:
+  Enabled: true
+
+Rails/ThreeStateBooleanColumn:
+  Enabled: true
+  Include: ['db/**/*.rb']
+
+Style/RedundantFilterChain:
+  Enabled: true
+
+Style/Attr:
+  Enabled: true
+
+Lint/RedundantSafeNavigation:
+  Enabled: false # todo: disabled for now. We have many parts like params[:key]&.to_i. The problem is that nil.to_i is 0 and nil&.to_i is nil.
+  AllowedMethods: ['instance_of?', 'kind_of?', 'is_a?', 'eql?', 'respond_to?', 'equal?']
+
+Style/RedundantSelfAssignmentBranch:
+  Enabled: true
+
+Style/YAMLFileRead:
+  Enabled: true
+
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: true
+
+Rails/Present:
+  Enabled: true
+
+Bundler/OrderedGems:
+  Enabled: true
+
+RSpec/ReceiveMessages:
+  Enabled: true
+
+Performance/MapMethodChain:
+  Enabled: true
+
+Style/ArgumentsForwarding:
+  Enabled: true
+  UseAnonymousForwarding: false
+
+Style/RedundantReturn:
+  Enabled: true
+  AllowMultipleReturnValues: false
+
+Rails/UnusedRenderContent:
+  Enabled: true
+  Severity: warning
+
+Layout/MultilineOperationIndentation:
+  Enabled: true
+  EnforcedStyle: aligned
+  IndentationWidth:
+
+Rails/EnvLocal: # https://docs.rubocop.org/rubocop-rails/cops_rails.html#railsenvlocal
+  Enabled: false # (bkrapf) disabled for now, maybe enable in the future.
+
+RSpec/SpecFilePathFormat:
+  Enabled: true
+  Include: ['**/*_spec.rb']
+  Exclude: ['**/spec/routing/**/*']
+  CustomTransform: {"RuboCop": "rubocop", "RSpec": "rspec"}
+  IgnoreMethods: false
+  IgnoreMetadata: { "type": "routing" }
+
+Rails/FindEach:
+  Enabled: true
+  AllowedMethods: ['order', 'limit', 'select', 'lock']
+  AllowedPatterns: []
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+  EnforcedStyle: symmetrical
+
+Rails/RedundantActiveRecordAllMethod:
+  Enabled: true
+  AllowedReceivers: ['ActionMailer::Preview', 'ActiveSupport::TimeZone']
+
+Style/SelfAssignment:
+  Enabled: true
+
+Style/ParenthesesAroundCondition:
+  Enabled: true
+  AllowSafeAssignment: true
+  AllowInMultilineConditions: true
+
+Layout/SpaceAroundOperators:
+  Enabled: true
+  AllowForAlignment: false
+  EnforcedStyleForExponentOperator: space
+  EnforcedStyleForRationalLiterals: space
