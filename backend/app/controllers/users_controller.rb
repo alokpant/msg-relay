@@ -3,7 +3,7 @@
 # app/controllers/users_controller.rb
 class UsersController < ApplicationController
   def index
-    users = User.limit(api_size)
+    users = User.limit(api_response_limit)
 
     render json: users
   end
@@ -13,26 +13,26 @@ class UsersController < ApplicationController
 
     if user
       render_json_response(
-        { error: 'Email already exists'},
+        { error: 'Email already exists' },
         :unprocessable_entity
       )
     else
       user = User.new(user_params)
 
       return render_json_response(user, :created) if user.save
-        
+
       render_json_response(user.errors, :unprocessable_entity)
     end
   end
 
   private
 
-  def api_size
+  def api_response_limit
     params[:limit] || 10
   end
 
   def render_json_response(data, status)
-    render json: data, status:
+    render json: data, status: status
   end
 
   def user_params

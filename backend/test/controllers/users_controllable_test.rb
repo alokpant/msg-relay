@@ -43,7 +43,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return only response indicated by limit' do
     20.times { |i| User.create(email: "newuser#{i}@example.com") }
-  
+
     size = 3
 
     get users_url, params: { limit: size }
@@ -54,7 +54,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return 10 response if no limit is present in params' do
     20.times { |i| User.create(email: "newuser#{i}@example.com") }
-  
+
     get users_url, as: :json
     assert_response :success
 
