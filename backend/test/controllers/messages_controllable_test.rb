@@ -2,6 +2,7 @@
 
 require 'test_helper'
 
+# test/controllers/messages_controllable_test.rb
 class MessagesControllerTest < ActionDispatch::IntegrationTest
   # INDEX method - Start #
   test 'should return empty array when no message exist' do
@@ -14,7 +15,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return all messages if param does not include user_id' do
     5.times do |i|
-      user = User.create(email: "newuser#{i}@example.com")
+      user = User.create(email: "newuser_#{i}@example.com")
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
 
@@ -50,7 +51,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return record for user if params includes user_id' do
     5.times do |i|
-      user = User.create(email: "newuser#{i}@example.com")
+      user = User.create(email: "newuser_#{i}@example.com")
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
 
@@ -64,7 +65,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return only response indicated by limit' do
     20.times do |i|
-      user = User.create(email: "newuser#{i}@example.com")
+      user = User.create(email: "newuser_#{i}@example.com")
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
     size = 3
@@ -77,7 +78,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return 10 response if no limit is present in params' do
     20.times do |i|
-      user = User.create(email: "newuser#{i}@example.com")
+      user = User.create(email: "newuser_#{i}@example.com")
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
 
@@ -92,7 +93,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   # SHOW method - Start #
   test 'should show message if present' do
     20.times do |i|
-      user = User.create(email: "newuser#{i}@example.com")
+      user = User.create(email: "newuser_#{i}@example.com")
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
 
@@ -106,7 +107,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should raise error if message is not present' do
     2.times do |i|
-      user = User.create(email: "newuser#{i}@example.com")
+      user = User.create(email: "newuser_#{i}@example.com")
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
     get message_url(9999), as: :json
@@ -239,7 +240,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update message if message does not belong to the user' do
     user = User.create(email: 'newuser@example.com')
-    user1 = User.create(email: 'newuser1@example.com')
+    user1 = User.create(email: 'newuser_1@example.com')
     message = user.messages.create(title: 'New Title', body: 'New body')
 
     put message_url(message.id),

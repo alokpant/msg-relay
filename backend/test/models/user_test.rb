@@ -12,6 +12,7 @@
 #
 require 'test_helper'
 
+# test/models/user_test.rb:
 class UserTest < ActiveSupport::TestCase
   test 'email should be present' do
     user = User.new

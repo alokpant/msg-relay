@@ -1,3 +1,5 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -7,4 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:create, :index]
   resources :messages, only: [:create, :update, :show, :index]
+
+  # Mount Sidekiq web interface at a specific route
+  mount Sidekiq::Web => '/sidekiq'
 end

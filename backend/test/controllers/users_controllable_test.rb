@@ -2,6 +2,7 @@
 
 require 'test_helper'
 
+# test/controllers/users_controllable_test.rb
 class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'should create user with unique email' do
     email = 'newuser@example.com'

@@ -21,6 +21,7 @@
 #
 require 'test_helper'
 
+# test/models/message_test.rb
 class MessageTest < ActiveSupport::TestCase
   test 'title should be present' do
     user = User.create(email: 'test@foo.com')
