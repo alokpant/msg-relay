@@ -8,11 +8,3 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
-
-one:
-  email: MyString
-  json_web_token: MyString
-
-two:
-  email: MyString
-  json_web_token: MyString
