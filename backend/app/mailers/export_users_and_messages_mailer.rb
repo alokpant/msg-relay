@@ -4,7 +4,7 @@
 class ExportUsersAndMessagesMailer < ApplicationMailer
   default from: 'no-reply@alokpant.com'
 
-  def export
+  def perform
     users_file = params[:users_file]
     messages_file = params[:messages_file]
     timestamp = Time.zone.today

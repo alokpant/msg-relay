@@ -1,6 +1,7 @@
 # config/sidekiq.yml
 :concurrency: 5
-:schedule:
-  export_job:
-    cron: "59 23 * * *" # This cron schedule runs every day at 23:59
-    class: "ExportUsersAndMessagesWorker"
+:scheduler:
+  :schedule:
+    export_job:
+      cron: "59 23 * * *" # This cron schedule runs every day at 23:59
+      class: "ExportUsersAndMessagesWorker"

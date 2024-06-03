@@ -2,7 +2,7 @@
 
 # app/controllers/messages_controller.rb
 class MessagesController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!
 
   def index
     messages = Message.limit(api_response_limit)
@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = @current_user.messages.build(message_params)
+    message = current_user.messages.build(message_params)
     if message.save
       render json: message, status: :created
     else
@@ -55,6 +55,6 @@ class MessagesController < ApplicationController
     return @current_user if @current_user
 
     token = request&.headers&.[]('Authorization')
-    @current_user = User.find_by(json_web_token: token, id: params[:user_id])
+    @current_user = User.find_by(json_web_token: token)
   end
 end
