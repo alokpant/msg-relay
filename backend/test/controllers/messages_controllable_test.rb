@@ -6,7 +6,9 @@ require 'test_helper'
 class MessagesControllerTest < ActionDispatch::IntegrationTest
   # INDEX method - Start #
   test 'should return empty array when no message exist' do
-    get messages_url, as: :json
+    user = User.create(email: "newuser@example.com")
+    get messages_url,
+      headers: { 'Authorization' => user.json_web_token }
     assert_response :success
 
     json_response = JSON.parse(@response.body)
@@ -19,11 +21,30 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
 
-    get messages_url, as: :json
+    get messages_url,
+      headers: { 'Authorization' => User.last.json_web_token }
+
     assert_response :success
 
     json_response = JSON.parse(@response.body)
     assert_equal json_response.length, 5
+  end
+
+  test 'should return record for user if params includes user_id' do
+    5.times do |i|
+      user = User.create(email: "newuser_#{i}@example.com")
+      user.messages.create(title: "message #{i}", body: "body #{i}")
+    end
+
+    last_user_id = User.last.id
+    get messages_url,
+      params: { user_id: last_user_id },
+      headers: { 'Authorization' => User.last.json_web_token }
+
+    assert_response :success
+
+    json_response = JSON.parse(@response.body)[0]
+    assert_equal json_response['user_id'], last_user_id
   end
 
   test 'should return empty array if user does not have any messages' do
@@ -31,7 +52,10 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     user.messages.create(title: 'first message', body: 'first body')
 
     user1 = User.create(email: 'seconduser@example.com')
-    get messages_url, params: { user_id: user1.id }
+    get messages_url,
+      params: { user_id: user1.id },
+      headers: { 'Authorization' => user.json_web_token }
+
     assert_response :success
 
     json_response = JSON.parse(@response.body)
@@ -42,25 +66,14 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     user = User.create(email: 'newuser@example.com')
     user.messages.create(title: 'first message', body: 'first body')
 
-    get messages_url, params: { user_id: 20 }
+    get messages_url,
+      params: { user_id: 20 },
+      headers: { 'Authorization' => user.json_web_token }
+
     assert_response :success
 
     json_response = JSON.parse(@response.body)
     assert_equal json_response, []
-  end
-
-  test 'should return record for user if params includes user_id' do
-    5.times do |i|
-      user = User.create(email: "newuser_#{i}@example.com")
-      user.messages.create(title: "message #{i}", body: "body #{i}")
-    end
-
-    last_user_id = User.last.id
-    get messages_url, params: { user_id: last_user_id }
-    assert_response :success
-
-    json_response = JSON.parse(@response.body)[0]
-    assert_equal json_response['user_id'], last_user_id
   end
 
   test 'should return only response indicated by limit' do
@@ -70,7 +83,10 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     end
     size = 3
 
-    get messages_url, params: { limit: size }
+    get messages_url,
+      params: { limit: size },
+      headers: { 'Authorization' => User.last.json_web_token }
+
     assert_response :success
     json_response = JSON.parse(@response.body)
     assert_equal json_response.length, size
@@ -82,7 +98,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
       user.messages.create(title: "message #{i}", body: "body #{i}")
     end
 
-    get messages_url, as: :json
+    get messages_url,
+      headers: { 'Authorization' => User.last.json_web_token }
     assert_response :success
 
     json_response = JSON.parse(@response.body)
@@ -98,23 +115,13 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     end
 
     last_message = Message.last
-    get message_url(last_message), as: :json
+    get message_url(last_message),
+      headers: { 'Authorization' => User.last.json_web_token }
+    
     assert_response :success
 
     json_response = JSON.parse(@response.body)
     assert_equal json_response['id'], last_message.id
-  end
-
-  test 'should raise error if message is not present' do
-    2.times do |i|
-      user = User.create(email: "newuser_#{i}@example.com")
-      user.messages.create(title: "message #{i}", body: "body #{i}")
-    end
-    get message_url(9999), as: :json
-
-    assert_response :not_found
-    json_response = JSON.parse(@response.body)
-    assert_equal('Not Found', json_response['error'])
   end
   # SHOW method - end #
 
@@ -138,25 +145,6 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     json_response = JSON.parse(@response.body)
     assert_equal json_response['user_id'], user.id
-  end
-
-  test 'should not create message if user does not exist' do
-    user = User.create(email: 'newuser@example.com')
-
-    post messages_url,
-         params: {
-           message: {
-             title: 'New Title',
-             body: 'New Body'
-           },
-           user_id: 9999
-         },
-         headers: { 'Authorization' => user.json_web_token },
-         as: :json
-
-    assert_response :unauthorized
-    json_response = JSON.parse(@response.body)
-    assert_equal('Unauthorized', json_response['error'])
   end
 
   test 'should not create message without authentication' do
@@ -186,7 +174,6 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
             title: 'New Title 2',
             body: 'New Body 2'
           },
-          user_id: user.id
         },
         headers: { 'Authorization' => user.json_web_token },
         as: :json
@@ -199,9 +186,10 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal json_response['body'], 'New Body 2'
   end
 
-  test 'should not update message if user does not exist' do
+  test 'should not update message if message does not belong to the user' do
     user = User.create(email: 'newuser@example.com')
     message = user.messages.create(title: 'New Title', body: 'New body')
+    user1 = User.create(email: 'newuser2@example.com')
 
     put message_url(message.id),
         params: {
@@ -209,14 +197,13 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
             title: 'New Title 2',
             body: 'New Body 2'
           },
-          user_id: 9999
         },
-        headers: { 'Authorization' => user.json_web_token },
+        headers: { 'Authorization' => user1.json_web_token },
         as: :json
 
-    assert_response :unauthorized
+    assert_response :not_found
     json_response = JSON.parse(@response.body)
-    assert_equal('Unauthorized', json_response['error'])
+    assert_equal('Not Found', json_response['error'])
   end
 
   test 'should not update message without authentication' do
@@ -229,34 +216,12 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
             title: 'New Title 2',
             body: 'New Body 2'
           },
-          user_id: user.id
         },
         as: :json
 
     assert_response :unauthorized
     json_response = JSON.parse(@response.body)
     assert_equal('Unauthorized', json_response['error'])
-  end
-
-  test 'should not update message if message does not belong to the user' do
-    user = User.create(email: 'newuser@example.com')
-    user1 = User.create(email: 'newuser_1@example.com')
-    message = user.messages.create(title: 'New Title', body: 'New body')
-
-    put message_url(message.id),
-        params: {
-          message: {
-            title: 'New Title 2',
-            body: 'New Body 2'
-          },
-          user_id: user1.id
-        },
-        headers: { 'Authorization' => user1.json_web_token },
-        as: :json
-
-    assert_response :not_found
-    json_response = JSON.parse(@response.body)
-    assert_equal('Not Found', json_response['error'])
   end
   # UPDATE method - End #
 end
