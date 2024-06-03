@@ -1,0 +1,49 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes: 
+      - ./frontend:/app
+    restart: "no"
+    ports:
+      - "5173:5173"
+    env_file:
+      - ".env"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: "no"
+    env_file:
+      - ".env"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      RAILS_ENV: development
+
+  postgres:
+    image: postgres:16-alpine
+    env_file:
+      - ".env"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      
+  redis:
+    image: redis:7.0.11-alpine
+    env_file:
+      - ".env"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  postgres-data:
+  redis-data:
