@@ -6,9 +6,9 @@ require 'test_helper'
 class MessagesControllerTest < ActionDispatch::IntegrationTest
   # INDEX method - Start #
   test 'should return empty array when no message exist' do
-    user = User.create(email: "newuser@example.com")
+    user = User.create(email: 'newuser@example.com')
     get messages_url,
-      headers: { 'Authorization' => user.json_web_token }
+        headers: { 'Authorization' => user.json_web_token }
     assert_response :success
 
     json_response = JSON.parse(@response.body)
@@ -22,7 +22,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     end
 
     get messages_url,
-      headers: { 'Authorization' => User.last.json_web_token }
+        headers: { 'Authorization' => User.last.json_web_token }
 
     assert_response :success
 
@@ -38,8 +38,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     last_user_id = User.last.id
     get messages_url,
-      params: { user_id: last_user_id },
-      headers: { 'Authorization' => User.last.json_web_token }
+        params: { user_id: last_user_id },
+        headers: { 'Authorization' => User.last.json_web_token }
 
     assert_response :success
 
@@ -53,8 +53,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     user1 = User.create(email: 'seconduser@example.com')
     get messages_url,
-      params: { user_id: user1.id },
-      headers: { 'Authorization' => user.json_web_token }
+        params: { user_id: user1.id },
+        headers: { 'Authorization' => user.json_web_token }
 
     assert_response :success
 
@@ -67,8 +67,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     user.messages.create(title: 'first message', body: 'first body')
 
     get messages_url,
-      params: { user_id: 20 },
-      headers: { 'Authorization' => user.json_web_token }
+        params: { user_id: 20 },
+        headers: { 'Authorization' => user.json_web_token }
 
     assert_response :success
 
@@ -84,8 +84,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     size = 3
 
     get messages_url,
-      params: { limit: size },
-      headers: { 'Authorization' => User.last.json_web_token }
+        params: { limit: size },
+        headers: { 'Authorization' => User.last.json_web_token }
 
     assert_response :success
     json_response = JSON.parse(@response.body)
@@ -99,7 +99,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     end
 
     get messages_url,
-      headers: { 'Authorization' => User.last.json_web_token }
+        headers: { 'Authorization' => User.last.json_web_token }
     assert_response :success
 
     json_response = JSON.parse(@response.body)
@@ -116,8 +116,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     last_message = Message.last
     get message_url(last_message),
-      headers: { 'Authorization' => User.last.json_web_token }
-    
+        headers: { 'Authorization' => User.last.json_web_token }
+
     assert_response :success
 
     json_response = JSON.parse(@response.body)
@@ -173,7 +173,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
           message: {
             title: 'New Title 2',
             body: 'New Body 2'
-          },
+          }
         },
         headers: { 'Authorization' => user.json_web_token },
         as: :json
@@ -196,7 +196,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
           message: {
             title: 'New Title 2',
             body: 'New Body 2'
-          },
+          }
         },
         headers: { 'Authorization' => user1.json_web_token },
         as: :json
@@ -215,7 +215,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
           message: {
             title: 'New Title 2',
             body: 'New Body 2'
-          },
+          }
         },
         as: :json
 
