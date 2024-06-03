@@ -3,7 +3,8 @@ module.exports = {
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended-type-checked',
+    "plugin:@typescript-eslint/recommended",
+    'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/stylistic-type-checked',
     'plugin:react/recommended',
@@ -11,11 +12,17 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', "@typescript-eslint"],
+  parserOptions: {
+    project: './tsconfig.json', // Specify the path to your tsconfig.json
+    tsconfigRootDir: './', // Set the root directory
+  },
   rules: {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
+    "react/prop-types": "off",
+    "@typescript-eslint/no-unsafe-assignment": 'warn'
   },
 }
