@@ -48,12 +48,12 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should return empty array if user does not have any messages' do
-    user = User.create(email: 'newuser@example.com')
+    user = User.create(email: 'new_user@example.com')
     user.messages.create(title: 'first message', body: 'first body')
 
-    user1 = User.create(email: 'seconduser@example.com')
+    user_1 = User.create(email: 'seconduser@example.com')
     get messages_url,
-        params: { user_id: user1.id },
+        params: { user_id: user_1.id },
         headers: { 'Authorization' => user.json_web_token }
 
     assert_response :success
@@ -189,7 +189,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   test 'should not update message if message does not belong to the user' do
     user = User.create(email: 'newuser@example.com')
     message = user.messages.create(title: 'New Title', body: 'New body')
-    user1 = User.create(email: 'newuser2@example.com')
+    user_1 = User.create(email: 'newuser2@example.com')
 
     put message_url(message.id),
         params: {
@@ -198,7 +198,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
             body: 'New Body 2'
           }
         },
-        headers: { 'Authorization' => user1.json_web_token },
+        headers: { 'Authorization' => user_1.json_web_token },
         as: :json
 
     assert_response :not_found

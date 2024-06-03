@@ -45,8 +45,8 @@ class MessageTest < ActiveSupport::TestCase
 
   test 'should belong to user' do
     user = User.create(email: 'test@foo.com')
-    message1 = user.messages.create(title: 'message1', body: 'first message')
+    message_1 = user.messages.create(title: 'message_1', body: 'first message')
 
-    assert_respond_to message1, :user
+    assert_respond_to message_1, :user
   end
 end

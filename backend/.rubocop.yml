@@ -38,6 +38,9 @@ Layout/MultilineMethodCallIndentation:
 Style/ClassEqualityComparison:
   Enabled: true
 
+Style/EndOfLine:
+  Enabled: false
+
 Style/HashEachMethods:
   Enabled: true
 
