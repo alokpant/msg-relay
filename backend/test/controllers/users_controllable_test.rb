@@ -12,7 +12,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     json_response = JSON.parse(@response.body)
     assert_response :created
-    assert_equal json_response['email'], email
+    assert_equal json_response?.email, email
   end
 
   test 'should not create user if email already exists' do

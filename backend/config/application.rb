@@ -33,13 +33,6 @@ module Backend
     config.middleware.use ActionDispatch::Session::CookieStore
     config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
     config.session_store :cache_store, key: "_msg_relay_session", expire_after: 1.day
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins 'http://localhost:5431'
-        resource '*',
-          headers: :any,
-          methods: [:get, :post, :put, :patch, :delete, :head]
-      end
-    end
+
   end
 end

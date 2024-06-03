@@ -121,7 +121,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     json_response = JSON.parse(@response.body)
-    assert_equal json_response['id'], last_message.id
+    assert_equal json_response?.id, last_message.id
   end
   # SHOW method - end #
 
@@ -159,7 +159,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unauthorized
     json_response = JSON.parse(@response.body)
-    assert_equal('Unauthorized', json_response['error'])
+    assert_equal('Unauthorized', json_response.error)
   end
   # CREATE method - End #
 
@@ -182,8 +182,8 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     json_response = JSON.parse(@response.body)
     assert_equal json_response['user_id'], user.id
-    assert_equal json_response['title'], 'New Title 2'
-    assert_equal json_response['body'], 'New Body 2'
+    assert_equal json_response?.title, 'New Title 2'
+    assert_equal json_response?.body, 'New Body 2'
   end
 
   test 'should not update message if message does not belong to the user' do
@@ -203,7 +203,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
     json_response = JSON.parse(@response.body)
-    assert_equal('Not Found', json_response['error'])
+    assert_equal('Not Found', json_response.error)
   end
 
   test 'should not update message without authentication' do
@@ -221,7 +221,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unauthorized
     json_response = JSON.parse(@response.body)
-    assert_equal('Unauthorized', json_response['error'])
+    assert_equal('Unauthorized', json_response.error)
   end
   # UPDATE method - End #
 end
