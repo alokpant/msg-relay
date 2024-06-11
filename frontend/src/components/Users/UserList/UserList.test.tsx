@@ -1,6 +1,7 @@
-import { render, screen, act } from '@testing-library/react';
-import UserList from './UserList';
+import { act, render } from '@testing-library/react';
+import UserList, { ColHeaderNames } from './UserList';
 import fetch from 'jest-fetch-mock';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('UserList Component', () => {
   const MOCK_USERS = [
@@ -39,11 +40,15 @@ describe('UserList Component', () => {
   it('renders all items correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify(MOCK_USERS));
 
-    await act(() => render(<UserList />));
+    const { queryByText } = render(<BrowserRouter><UserList /></BrowserRouter>);
 
-    expect(screen.getByText(/test@example.com/)).toBeInTheDocument();
-    expect(screen.getByText(/newuser_0@example.com/)).toBeInTheDocument();
-    expect(fetch).toHaveBeenCalledTimes(1)
+    await act(() => expect(fetch).toHaveBeenCalledTimes(1));
+    Object.values(ColHeaderNames).forEach(value => expect(queryByText(value)).toBeInTheDocument())
+
+    Object.values(MOCK_USERS).forEach(names => {
+      Object.values(names).forEach(colName => 
+      expect(queryByText(colName)).toBeInTheDocument())
+    })
   });
 });
 

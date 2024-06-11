@@ -5,13 +5,20 @@ import { buildUrlParams } from '../../../helpers/utils';
 import { useNavigate } from 'react-router-dom';
 import type { ResponseError } from '../../types';
 
+export const ColHeaderNames = {
+  ID: 'ID',
+  EMAIL: 'Email',
+  TOKEN: 'Token',
+  CREATED_AT: 'Created At'
+}
+
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 80 },
-  { field: 'email', headerName: 'Email', flex: 2 },
-  { field: 'json_web_token', headerName: 'token', flex: 3 },
+  { field: 'id', headerName: ColHeaderNames.ID, width: 80 },
+  { field: 'email', headerName: ColHeaderNames.EMAIL, flex: 2 },
+  { field: 'json_web_token', headerName: ColHeaderNames.TOKEN, flex: 3 },
   {
     field: 'created_at',
-    headerName: 'Created At',
+    headerName: ColHeaderNames.CREATED_AT,
     flex: 2,
   },
 ];
@@ -65,6 +72,7 @@ const UserList = () => {
       <DataGrid
         rows={users}
         columns={columns}
+        data-testid='user-list'
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 },

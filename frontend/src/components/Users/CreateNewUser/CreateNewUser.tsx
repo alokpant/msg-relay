@@ -33,6 +33,7 @@ const CreateNewUser: React.FC<CreateUserProps> = ({ setRefetchUsers }) => {
           alignSelf: 'flex-end'
         }}
         onClick={handleClickOpen}
+        data-testid="button-add-new-user"
       >
         Add new user
       </Button>
@@ -83,12 +84,14 @@ const CreateNewUser: React.FC<CreateUserProps> = ({ setRefetchUsers }) => {
             type="email"
             fullWidth
             variant="standard"
+            inputProps={{ 'data-testid': "input-email" }}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} data-testid="button-cancel-user">Cancel</Button>
           <Button type="submit"
             variant="contained"
+            data-testid="button-create-user"
             color="secondary"
           >Create</Button>
         </DialogActions>
