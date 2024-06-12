@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import UserList, { ColHeaderNames } from './UserList';
 import fetch from 'jest-fetch-mock';
 import { BrowserRouter } from 'react-router-dom';
@@ -40,15 +40,22 @@ describe('UserList Component', () => {
   it('renders all items correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify(MOCK_USERS));
 
-    const { queryByText } = render(<BrowserRouter><UserList /></BrowserRouter>);
+    await act(() => render(<BrowserRouter><UserList /></BrowserRouter>));
 
-    await act(() => expect(fetch).toHaveBeenCalledTimes(1));
-    Object.values(ColHeaderNames).forEach(value => expect(queryByText(value)).toBeInTheDocument())
+    const apiUrl = `http://localhost:3000/users?limit=999`;
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(apiUrl);
 
-    Object.values(MOCK_USERS).forEach(names => {
-      Object.values(names).forEach(colName => 
-      expect(queryByText(colName)).toBeInTheDocument())
-    })
+    Object.values(ColHeaderNames).forEach(headerName => {
+      expect(screen.getByText(headerName)).toBeInTheDocument();
+    });
+
+    MOCK_USERS.forEach(user => {
+      expect(screen.getByText(user.id.toString())).toBeInTheDocument();
+      expect(screen.getByText(user.email)).toBeInTheDocument();
+      expect(screen.getByText(user.json_web_token)).toBeInTheDocument();
+      expect(screen.getByText(user.created_at)).toBeInTheDocument();
+    });
   });
 });
 

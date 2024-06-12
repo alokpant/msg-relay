@@ -79,6 +79,7 @@ const UserList = () => {
           },
         }}
         onRowClick={handleRowClickEvent}
+        pageSizeOptions={[10, 50, 100]}
         sx={{
           width: '100%',
           background: '#fff'
