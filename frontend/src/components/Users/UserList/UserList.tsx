@@ -1,9 +1,11 @@
-import { DataGrid, GridColDef, GridEventListener, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import CreateNewUser from '../CreateNewUser/CreateNewUser';
 import { buildUrlParams } from '../../../helpers/utils';
 import { useNavigate } from 'react-router-dom';
 import type { ResponseError } from '../../types';
+import EmailIcon from '@mui/icons-material/Email';
+import IconButton from '@mui/material/IconButton';
 
 export const ColHeaderNames = {
   ID: 'ID',
@@ -11,17 +13,6 @@ export const ColHeaderNames = {
   TOKEN: 'Token',
   CREATED_AT: 'Created At'
 }
-
-const columns: GridColDef[] = [
-  { field: 'id', headerName: ColHeaderNames.ID, width: 80 },
-  { field: 'email', headerName: ColHeaderNames.EMAIL, flex: 2 },
-  { field: 'json_web_token', headerName: ColHeaderNames.TOKEN, flex: 3 },
-  {
-    field: 'created_at',
-    headerName: ColHeaderNames.CREATED_AT,
-    flex: 2,
-  },
-];
 
 interface User {
   id: number
@@ -52,8 +43,8 @@ const UserList = () => {
       });
   }, [refetchUsers])
 
-  const handleRowClickEvent: GridEventListener<'rowClick'> = (
-    params: GridRowParams<User>, // GridRowParams
+  const showUserMessages = (
+    params: GridRenderCellParams, // GridRowParams
   ) => {
     navigate(
       `/messages/${params?.id}`,
@@ -65,6 +56,28 @@ const UserList = () => {
       }
     )
   };
+
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: ColHeaderNames.ID, width: 80, type: 'number' },
+    { field: 'email', headerName: ColHeaderNames.EMAIL, flex: 2, type: 'string' },
+    { field: 'json_web_token', headerName: ColHeaderNames.TOKEN, flex: 3, type: 'string' },
+    {
+      field: 'created_at',
+      headerName: ColHeaderNames.CREATED_AT,
+      type: 'string',
+      flex: 2,
+    },
+    {
+      field: 'edit_button',
+      headerName: '',
+      width: 80,
+      renderCell: (params: GridRenderCellParams) => {
+        return <IconButton onClick={() => showUserMessages(params)} aria-label="edit">
+          <EmailIcon />
+        </IconButton>
+      }
+    }
+  ];
   
   return (
     <>
@@ -78,7 +91,7 @@ const UserList = () => {
             paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        onRowClick={handleRowClickEvent}
+        // onRowClick={handleRowClickEvent}
         pageSizeOptions={[10, 50, 100]}
         sx={{
           width: '100%',
