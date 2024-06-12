@@ -4,6 +4,9 @@
 class ExportUsersAndMessagesWorker
   include Sidekiq::Worker
 
+  USER_HEADERS = ['ID', 'Created At', 'Email', 'JSON Web Token']
+  MESSAGE_HEADERS = ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email']
+
   def perform
     require 'csv'
     require 'fileutils'
@@ -23,7 +26,7 @@ class ExportUsersAndMessagesWorker
 
   def add_users(file_path)
     CSV.open(file_path, 'wb') do |csv|
-      csv << ['ID', 'Created At', 'Email', 'JSON Web Token']
+      csv << USER_HEADERS
       User.where(created_at: Time.zone.now.beginning_of_day..).find_each do |user|
         csv << [user.id, user.created_at, user.email, user.json_web_token]
       end
@@ -32,7 +35,7 @@ class ExportUsersAndMessagesWorker
 
   def add_messages(file_path)
     CSV.open(file_path, 'wb') do |csv|
-      csv << ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email']
+      csv << MESSAGE_HEADERS
       Message.where(created_at: Time.zone.now.beginning_of_day..)
         .includes(:user)
         .order(:user_id)
