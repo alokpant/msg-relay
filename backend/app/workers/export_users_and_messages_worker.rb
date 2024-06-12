@@ -4,8 +4,8 @@
 class ExportUsersAndMessagesWorker
   include Sidekiq::Worker
 
-  USER_HEADERS = ['ID', 'Created At', 'Email', 'JSON Web Token']
-  MESSAGE_HEADERS = ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email']
+  USER_HEADERS = ['ID', 'Created At', 'Email', 'JSON Web Token'].freeze
+  MESSAGE_HEADERS = ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email'].freeze
 
   def perform
     require 'csv'

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'csv'
 require 'test_helper'
 
@@ -37,7 +38,7 @@ class ExportUsersAndMessagesWorkerTest < ActiveSupport::TestCase
   end
 
   test 'should write data correctly in message file' do
-    user = User.create(email: "newuser@example.com")
+    user = User.create(email: 'newuser@example.com')
     5.times { |i| user.messages.create(title: "message #{i}", body: "body #{i}") }
 
     execute_and_test
@@ -67,7 +68,7 @@ class ExportUsersAndMessagesWorkerTest < ActiveSupport::TestCase
   end
 
   def file_exists(entity)
-    File.exist?(Rails.root.join('tmp', file_name(entity)))
+    Rails.root.join('tmp', file_name(entity)).exist?
   end
 
   def csv_contents(name)
