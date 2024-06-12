@@ -88,7 +88,13 @@ const CreateNewUser: React.FC<CreateUserProps> = ({ setRefetchUsers }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} data-testid="button-cancel-user">Cancel</Button>
+          <Button data-testid="button-cancel-user"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              handleClose();
+            }}
+          >Cancel</Button>
           <Button type="submit"
             variant="contained"
             data-testid="button-create-user"
