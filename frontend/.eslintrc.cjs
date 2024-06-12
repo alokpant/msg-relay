@@ -12,7 +12,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', "@typescript-eslint"],
+  plugins: ['react', 'react-refresh', "@typescript-eslint"],
   parserOptions: {
     project: './tsconfig.json', // Specify the path to your tsconfig.json
     tsconfigRootDir: './', // Set the root directory
@@ -23,6 +23,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "react/prop-types": "off",
-    "@typescript-eslint/no-unsafe-assignment": 'warn'
-  },
+    "@typescript-eslint/no-unsafe-assignment": 'warn',
+  }
 }
