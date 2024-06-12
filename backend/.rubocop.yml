@@ -2,8 +2,6 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-thread_safety
-  # - rubocop-rspec
-  # - rubocop-factory_bot
 
 AllCops:
   TargetRubyVersion: 3.2.2
@@ -30,6 +28,7 @@ AllCops:
     - 'public/**/*'
     - 'storage/**/*'
     - 'tmp/**/*'
+    - vendor/bundle/**/*
 
 Layout/MultilineMethodCallIndentation:
   Enabled: true

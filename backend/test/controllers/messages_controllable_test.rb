@@ -159,7 +159,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unauthorized
     json_response = JSON.parse(@response.body)
-    assert json_response.key?("error")
+    assert json_response.key?('error')
     assert_equal('Unauthorized', json_response['error'])
   end
   # CREATE method - End #
@@ -204,7 +204,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
     json_response = JSON.parse(@response.body)
-    assert json_response.key?("error")
+    assert json_response.key?('error')
     assert_equal('Not Found', json_response['error'])
   end
 
@@ -223,7 +223,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unauthorized
     json_response = JSON.parse(@response.body)
-    assert json_response.key?("error")
+    assert json_response.key?('error')
     assert_equal('Unauthorized', json_response['error'])
   end
   # UPDATE method - End #

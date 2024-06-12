@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -51,6 +55,7 @@ jobs:
       - name: Bundle install
         working-directory: backend
         run: |
+          gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
