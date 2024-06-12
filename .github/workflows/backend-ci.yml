@@ -1,35 +1,77 @@
-# This workflow uses actions that are not certified by GitHub.  They are
-# provided by a third-party and are governed by separate terms of service,
-# privacy policy, and support documentation.
-#
-# This workflow will install a prebuilt Ruby version, install dependencies, and
-# run tests and linters.
 name: "Ruby on Rails CI"
+
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
+    
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: msg_relay_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Install Ruby and gems
+
+      - name: Install required apt packages
+        run: sudo apt-get -y install libpq-dev
+
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.4
           bundler-cache: true
+
+      - name: Setup cache key and directory for gems cache
+        uses: actions/cache@v3
+        with:
+          path: backend/vendor/bundle
+          key: ${{ runner.os }}-gem-use-ruby-${{ hashFiles('backend/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-use-ruby-
+
+      - name: Bundle install
+        working-directory: backend
+        run: |
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+
+      - name: Wait for PostgreSQL
+        run: |
+          while ! pg_isready -h localhost -U postgres -d msg_relay_test; do
+            echo "$(date) - waiting for database to start"
+            sleep 1
+          done
+
+      - name: Setup database
+        working-directory: backend
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:setup
+
       - name: Run Minitest tests
         working-directory: backend
         run: |
-          gem install bundler
-          bundle install
-          bundle exec rails db:prepare
           bundle exec rails test
+
       - name: Run RuboCop
         working-directory: backend
         run: |
