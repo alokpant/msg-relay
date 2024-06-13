@@ -17,9 +17,8 @@ class ExportUsersAndMessagesWorker
     messages_file_path = Rails.root.join('tmp', "new_messages_#{timestamp}.csv")
     add_messages(messages_file_path)
 
-    # setup mailer to send the file to an email or store in cloud
-    # ExportUsersAndMessagesMailer.with(users_file: users_file_path, messages_file: messages_file_path).exec.deliver_now
-    # FileUtils.rm([users_file_path, messages_file_path])
+    ExportUsersAndMessagesMailer.with(users_file: users_file_path, messages_file: messages_file_path).exec.deliver_now
+    FileUtils.rm([users_file_path, messages_file_path])
   end
 
   private
