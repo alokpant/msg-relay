@@ -49,4 +49,10 @@ class MessageTest < ActiveSupport::TestCase
 
     assert_respond_to message_1, :user
   end
+
+  test 'should not create a message when user does not exist' do
+    message_1 = Message.create(title: 'message_1', body: 'first message', user_id: 9999)
+
+    assert_not message.save, 'Saved message with missing user'
+  end
 end
