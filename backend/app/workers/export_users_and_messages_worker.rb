@@ -17,13 +17,13 @@ class ExportUsersAndMessagesWorker
     generate_csv_files('users')
     generate_csv_files('messages')
 
-    ExportUsersAndMessagesMailer.with(timestamp:).send_mail.deliver_now
+    ExportUsersAndMessagesMailer.with(timestamp: timestamp).send_mail.deliver_now
   end
 
   private
 
   def generate_csv_files(type)
-    file_path = send("#{type}_file_path")
+    file_path = send(:"#{type}_file_path")
     delete_file(file_path)
 
     add_records_to_csv(type, file_path)
@@ -40,7 +40,7 @@ class ExportUsersAndMessagesWorker
   def file_path(name)
     Rails.root.join('tmp', "new_#{name}_#{timestamp}.csv")
   end
-  
+
   def timestamp
     @timestamp ||= Time.zone.now.strftime('%Y%m%d')
   end
@@ -52,7 +52,7 @@ class ExportUsersAndMessagesWorker
   def add_records_to_csv(type, file_path)
     CSV.open(file_path, 'wb') do |csv|
       csv << CSV_HEADERS[type.to_sym]
-      send("add_#{type}_records", csv)
+      send(:"add_#{type}_records", csv)
     end
   end
 
