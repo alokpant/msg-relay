@@ -30,6 +30,21 @@ services:
     environment:
       RAILS_ENV: development
 
+  sidekiq:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - redis
+      - backend
+    env_file:
+      - ".env"
+    environment:
+      RAILS_ENV: development
+
   postgres:
     image: postgres:16-alpine
     env_file:
