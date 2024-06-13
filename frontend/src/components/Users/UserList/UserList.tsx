@@ -44,7 +44,7 @@ const UserList = () => {
   }, [refetchUsers])
 
   const showUserMessages = (
-    params: Record<string, User>, // GridRowParams
+    params: GridRenderCellParams, // GridRowParams
   ) => {
     navigate(
       `/messages/${params?.row?.id}`,
