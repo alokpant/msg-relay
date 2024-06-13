@@ -54,7 +54,8 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-thread_safety', require: false
 
-  gem "letter_opener", group: :development
+  gem "letter_opener"
+  gem 'letter_opener_web', '~> 3.0'
 end
 
 # adds schema to models and test files
