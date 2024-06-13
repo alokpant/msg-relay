@@ -14,8 +14,6 @@ class ExportUsersAndMessagesMailer < ApplicationMailer
     attachments["new_messages_#{timestamp}.csv"] = File.read(messages_file_url)
 
     mail(to: 'justtodesign@gmail.com', subject: "#{timestamp} - Export of New Users and Messages")
-
-    FileUtils.rm([users_file_url, messages_file_url])
   end
 
   private

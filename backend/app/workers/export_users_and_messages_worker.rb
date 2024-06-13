@@ -4,6 +4,8 @@
 class ExportUsersAndMessagesWorker
   include Sidekiq::Worker
 
+  CREATED_AT_FORMAT = '%Y-%m-%d %H:%m'
+
   CSV_HEADERS = {
     users: ['ID', 'Created At', 'Email', 'JSON Web Token'],
     messages: ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email']
@@ -15,7 +17,7 @@ class ExportUsersAndMessagesWorker
     generate_csv_files('users')
     generate_csv_files('messages')
 
-    ExportUsersAndMessagesMailer.with(timestamp: ).send_mail.deliver_now
+    ExportUsersAndMessagesMailer.with(timestamp:).send_mail.deliver_now
   end
 
   private
@@ -56,16 +58,16 @@ class ExportUsersAndMessagesWorker
 
   def add_users_records(csv)
     User.where(created_at: Time.zone.now.beginning_of_day..).find_each do |user|
-      csv << [user.id, user.created_at.strftime('%Y-%m-%d %HH-%m'), user.email, user.json_web_token]
+      csv << [user.id, user.created_at.strftime(CREATED_AT_FORMAT), user.email, user.json_web_token]
     end
   end
 
   def add_messages_records(csv)
-    Message.where(created_at: Time.zone.now.beginning_of_day..).limit(2)
+    Message.where(created_at: Time.zone.now.beginning_of_day..)
       .includes(:user)
       .order(:user_id)
       .find_each do |message|
-        csv << [message.id, message.created_at.strftime('%Y-%m-%d %HH-%m'), message.title, message.body, message.user.id, message.user.email]
+        csv << [message.id, message.created_at.strftime(CREATED_AT_FORMAT), message.title, message.body, message.user.id, message.user.email]
       end
   end
 end

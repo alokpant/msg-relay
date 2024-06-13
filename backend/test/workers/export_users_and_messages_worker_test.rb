@@ -26,12 +26,12 @@ class ExportUsersAndMessagesWorkerTest < ActiveSupport::TestCase
     assert_equal file_content.count, 3 # 2 users, 1 header
 
     headers = file_content.shift.map(&:strip)
-    assert_equal ExportUsersAndMessagesWorker::USER_HEADERS, headers
+    assert_equal ExportUsersAndMessagesWorker::CSV_HEADERS[:users], headers
 
     # check all users
     User.all.each_with_index do |user, i|
       assert_equal user.id.to_s, file_content[i][0]
-      assert_equal user.created_at.to_s, file_content[i][1]
+      assert_equal user.created_at.strftime(ExportUsersAndMessagesWorker::CREATED_AT_FORMAT), file_content[i][1]
       assert_equal user.email, file_content[i][2]
       assert_equal user.json_web_token, file_content[i][3]
     end
@@ -47,12 +47,12 @@ class ExportUsersAndMessagesWorkerTest < ActiveSupport::TestCase
     assert_equal file_content.count, 6 # 5 messages, 1 header
 
     headers = file_content.shift.map(&:strip)
-    assert_equal ExportUsersAndMessagesWorker::MESSAGE_HEADERS, headers
+    assert_equal ExportUsersAndMessagesWorker::CSV_HEADERS[:messages], headers
 
     # check all messages
     user.messages.each_with_index do |message, i|
       assert_equal message.id.to_s, file_content[i][0]
-      assert_equal message.created_at.to_s, file_content[i][1]
+      assert_equal message.created_at.strftime(ExportUsersAndMessagesWorker::CREATED_AT_FORMAT), file_content[i][1]
       assert_equal message.title, file_content[i][2]
       assert_equal message.body, file_content[i][3]
       assert_equal user.id.to_s, file_content[i][4]

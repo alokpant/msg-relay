@@ -45,13 +45,13 @@ class MessageTest < ActiveSupport::TestCase
 
   test 'should belong to user' do
     user = User.create(email: 'test@foo.com')
-    message_1 = user.messages.create(title: 'message_1', body: 'first message')
+    message = user.messages.create(title: 'message_1', body: 'first message')
 
-    assert_respond_to message_1, :user
+    assert_respond_to message, :user
   end
 
   test 'should not create a message when user does not exist' do
-    message_1 = Message.create(title: 'message_1', body: 'first message', user_id: 9999)
+    message = Message.new(title: 'message_1', body: 'first message', user_id: 9999)
 
     assert_not message.save, 'Saved message with missing user'
   end
