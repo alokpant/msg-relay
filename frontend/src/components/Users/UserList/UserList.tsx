@@ -1,4 +1,4 @@
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import CreateNewUser from '../CreateNewUser/CreateNewUser';
 import { buildUrlParams } from '../../../helpers/utils';
@@ -19,6 +19,10 @@ interface User {
   email: string
   json_web_token: string
   created_at: string
+}
+
+interface GridParams {
+  row: User
 }
 
 const UserList = () => {
@@ -44,14 +48,14 @@ const UserList = () => {
   }, [refetchUsers])
 
   const showUserMessages = (
-    params: GridRenderCellParams, // GridRowParams
+    params: GridParams, // GridRowParams
   ) => {
     navigate(
-      `/messages/${params?.row?.id}`,
+      `/messages/${params.row.id}`,
       { 
         state: {
-          token: params?.row?.json_web_token,
-          email: params?.row?.email
+          token: params.row.json_web_token,
+          email: params.row.email
         }
       }
     )
@@ -71,7 +75,7 @@ const UserList = () => {
       field: 'edit_button',
       headerName: '',
       width: 80,
-      renderCell: (params: GridRenderCellParams) => {
+      renderCell: (params: GridParams) => {
         return <IconButton onClick={() => showUserMessages(params)} aria-label="edit">
           <EmailIcon />
         </IconButton>
