@@ -4,47 +4,68 @@
 class ExportUsersAndMessagesWorker
   include Sidekiq::Worker
 
-  USER_HEADERS = ['ID', 'Created At', 'Email', 'JSON Web Token'].freeze
-  MESSAGE_HEADERS = ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email'].freeze
+  CSV_HEADERS = {
+    users: ['ID', 'Created At', 'Email', 'JSON Web Token'],
+    messages: ['ID', 'Created At', 'Title', 'Body', 'User ID', 'User Email']
+  }.freeze
 
   def perform
     require 'csv'
-    require 'fileutils'
 
-    users_file_path = Rails.root.join('tmp', "new_users_#{timestamp}.csv")
-    add_users(users_file_path)
+    generate_csv_files('users')
+    generate_csv_files('messages')
 
-    messages_file_path = Rails.root.join('tmp', "new_messages_#{timestamp}.csv")
-    add_messages(messages_file_path)
-
-    ExportUsersAndMessagesMailer.with(users_file: users_file_path, messages_file: messages_file_path).exec.deliver_now
-    FileUtils.rm([users_file_path, messages_file_path])
+    ExportUsersAndMessagesMailer.with(timestamp: ).send_mail.deliver_now
   end
 
   private
 
-  def add_users(file_path)
-    CSV.open(file_path, 'wb') do |csv|
-      csv << USER_HEADERS
-      User.where(created_at: Time.zone.now.beginning_of_day..).find_each do |user|
-        csv << [user.id, user.created_at, user.email, user.json_web_token]
-      end
-    end
+  def generate_csv_files(type)
+    file_path = send("#{type}_file_path")
+    delete_file(file_path)
+
+    add_records_to_csv(type, file_path)
   end
 
-  def add_messages(file_path)
-    CSV.open(file_path, 'wb') do |csv|
-      csv << MESSAGE_HEADERS
-      Message.where(created_at: Time.zone.now.beginning_of_day..)
-        .includes(:user)
-        .order(:user_id)
-        .find_each do |message|
-          csv << [message.id, message.created_at, message.title, message.body, message.user.id, message.user.email]
-        end
-    end
+  def users_file_path
+    @users_file_path ||= file_path('users')
   end
 
+  def messages_file_path
+    @messages_file_path ||= file_path('messages')
+  end
+
+  def file_path(name)
+    Rails.root.join('tmp', "new_#{name}_#{timestamp}.csv")
+  end
+  
   def timestamp
     @timestamp ||= Time.zone.now.strftime('%Y%m%d')
+  end
+
+  def delete_file(file_path)
+    FileUtils.rm([file_path]) if File.exist?(file_path)
+  end
+
+  def add_records_to_csv(type, file_path)
+    CSV.open(file_path, 'wb') do |csv|
+      csv << CSV_HEADERS[type.to_sym]
+      send("add_#{type}_records", csv)
+    end
+  end
+
+  def add_users_records(csv)
+    User.where(created_at: Time.zone.now.beginning_of_day..).find_each do |user|
+      csv << [user.id, user.created_at.strftime('%Y-%m-%d %HH-%m'), user.email, user.json_web_token]
+    end
+  end
+
+  def add_messages_records(csv)
+    Message.where(created_at: Time.zone.now.beginning_of_day..).limit(2)
+      .includes(:user)
+      .order(:user_id)
+      .find_each do |message|
+        csv << [message.id, message.created_at.strftime('%Y-%m-%d %HH-%m'), message.title, message.body, message.user.id, message.user.email]
+      end
   end
 end

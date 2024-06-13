@@ -4,17 +4,23 @@
 class ExportUsersAndMessagesMailer < ApplicationMailer
   default from: 'no-reply@gmail.com'
 
-  def perform
-    users_file = params[:users_file]
-    messages_file = params[:messages_file]
-    timestamp = Time.zone.today
+  def send_mail
+    require 'fileutils'
 
-    attachments["new_users_#{timestamp}.csv"] = File.read(users_file)
-    attachments["new_messages_#{timestamp}.csv"] = File.read(messages_file)
+    timestamp = params[:timestamp]
+    users_file_url = file_path('users', timestamp)
+    messages_file_url = file_path('messages', timestamp)
+    attachments["new_users_#{timestamp}.csv"] = File.read(users_file_url)
+    attachments["new_messages_#{timestamp}.csv"] = File.read(messages_file_url)
 
-    mail(to: 'justtodesign@gmail.com', subject: "#{timestamp} - Export of New Users and Messages") do |format|
-      format.html
-      format.text
-    end
+    mail(to: 'justtodesign@gmail.com', subject: "#{timestamp} - Export of New Users and Messages")
+
+    FileUtils.rm([users_file_url, messages_file_url])
+  end
+
+  private
+
+  def file_path(name, timestamp)
+    Rails.root.join('tmp', "new_#{name}_#{timestamp}.csv")
   end
 end
