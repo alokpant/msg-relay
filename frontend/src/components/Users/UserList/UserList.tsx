@@ -44,10 +44,10 @@ const UserList = () => {
   }, [refetchUsers])
 
   const showUserMessages = (
-    params: GridRenderCellParams, // GridRowParams
+    params: Record<string, User>, // GridRowParams
   ) => {
     navigate(
-      `/messages/${params?.id}`,
+      `/messages/${params?.row?.id}`,
       { 
         state: {
           token: params?.row?.json_web_token,
