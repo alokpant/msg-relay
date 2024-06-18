@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
   # @argument user_id [Number] ID of user for whom to return all messages (Optional)
   # @return [Hash] attributes of messages
   # @example_request
-	#   { limit: 10, user_id: 146 }
+  #   { limit: 10, user_id: 146 }
   # @example_response
   #   [
   #     {
@@ -43,7 +43,7 @@ class MessagesController < ApplicationController
   # @param params [Hash] api params
   # @return [Hash] a single message
   # @example_request
-	#   { id: 1 }
+  #   { id: 1 }
   # @example_response
   #   {
   #     "id": 1,
@@ -64,7 +64,7 @@ class MessagesController < ApplicationController
   # @argument message [Hash] includes title and body to create message
   # @return [Hash] a single message
   # @example_request
-	#   {
+  #   {
   #     message: {
   #       title: 'Title for message',
   #       body: 'Body for message'
@@ -94,7 +94,7 @@ class MessagesController < ApplicationController
   # @argument message [Hash] includes title and body to create message
   # @return [Hash] a single message
   # @example_request
-	#   {
+  #   {
   #     id: 146,
   #     message: {
   #       title: 'New title for message',

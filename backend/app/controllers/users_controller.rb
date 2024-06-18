@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   # @argument api_limit [Number] indicates how many users to return (Default 10)
   # @return [User] array of available users
   # @example_request
-	#   { limit: 10 }
+  #   { limit: 10 }
   # @example_response
   #   [
   #     {
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   # @argument user [Hash] email of user to be created
   # @return [User] array of available users
   # @example_request
-	#   { email: 'apitesting@gmail.com' }
+  #   { email: 'apitesting@gmail.com' }
   # @example_response
   #   {
   #     "id": 146,
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   end
 
   private
-  
+
   def render_json_response(data, status)
     render json: data, status: status
   end
